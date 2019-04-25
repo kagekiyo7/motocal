@@ -3144,7 +3144,7 @@ var multiLangData = {
     "notice-20190424-2": {
         "en": "24/04/2019: Add character and weapons.",
         "ja": "2019/04/24: 天司武器4凸追加。他キャラ・武器追加。",
-        "zh": "2019/04/24: Add character and weapons.,
+        "zh": "2019/04/24: Add character and weapons.",
     },
     "notice-20190426-1": {
         "en": "26/04/2019: Add the total of Magna/Normal/Exceed ougi damage limits is 60%.",
