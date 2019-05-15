@@ -722,7 +722,8 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             ougiDamage: ougiDamage,
             chainBurst: chainBurst,
             expectedTurn: expectedTurn,
-            expectedCycleDamagePerTurn: expectedCycleDamagePerTurn,
+            averageCyclePerTime: expectedCycleDamagePerTurn / expectedAttack * 0.35 ,
+            
         };
     }
 
