@@ -390,7 +390,7 @@ var keyTypes = {
     "averageTotalExpected": "総回技のパーティ平均値",
     "expectedCycleDamagePerTurn": "予想ターン毎ダメージ(ジータさんのみ)",
     "averageCyclePerTurn": "予想ターン毎ダメージのパーティ平均値",
-//    "averageCyclePerTime": "予想ダメージ経時的な",
+    "averageCyclePerTime": "予想ターン毎ダメージのパーティ平均値/硬直秒(奥義硬直未考慮)",
 };
 var supportedChartSortkeys = {
     "totalAttack": "攻撃力(二手技巧無し,ジータさんのみ)",
