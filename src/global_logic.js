@@ -4,6 +4,7 @@ var elementRelation = GlobalConst.elementRelation;
 var bahamutRelation = GlobalConst.bahamutRelation;
 var bahamutFURelation = GlobalConst.bahamutFURelation;
 var supportAbilities = GlobalConst.supportAbilities;
+var onOffSwitch = GlobalConst.onOffSwitch;
 var zenith = GlobalConst.zenith;
 var zenithDA = GlobalConst.zenithDA;
 var zenithTA = GlobalConst.zenithTA;
@@ -1972,6 +1973,7 @@ module.exports.getInitialTotals = function (prof, chara, summon) {
         for (var s = 0; s < summon.length; s++) {
             var selfElement = summon[s].selfElement != undefined ? summon[s].selfElement : "fire";
             var friendElement = summon[s].friendElement != undefined ? summon[s].friendElement : "fire";
+            var shivabuff = summon[s].shivabuff != undefined ? summon[s].shivabuff : "false";
 
             var totalSummon = {
                 magna: 1.0,
