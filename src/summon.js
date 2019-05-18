@@ -447,8 +447,6 @@ var Summon = CreateClass({
                                          onChange={this.handleEvent.bind(this, "ougiDamage")}/>
                         </td>
                     </tr>
-                    </tbody>
-                </table>
 
                     <tr>
                         <th className="bg-primary">{intl.translate("シヴァバフ", locale)}</th>
@@ -457,6 +455,7 @@ var Summon = CreateClass({
                                          onChange={this.handleSelectEvent.bind(this, "onOffSwitch")}>{selector[locale].onOffSwitch}</FormControl>
                         </td>
                     </tr>
+
                     </tbody>
                 </table>
 
