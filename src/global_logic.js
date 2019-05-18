@@ -168,6 +168,7 @@ module.exports.calcDamage = function (summedAttack, totalSkillCoeff, criticalRat
     var def = module.exports.calcDefenseDebuff(enemyDefense, defenseDebuff);
     var damage = Math.ceil(Math.ceil(summedAttack / def) * totalSkillCoeff) * criticalRatio;
     var overedDamage = 0;
+    var shivaBuff = false;
 
     var limitValues = [[600000, 0.01], [500000, 0.05], [400000, 0.60], [300000, 0.80]];
 
@@ -206,6 +207,7 @@ module.exports.calcOugiDamage = function (summedAttack, totalSkillCoeff, critica
     var ratio = ougiRatio != undefined ? ougiRatio : 4.5;
     var damage = (1.0 + ougiDamageUP) * ratio * Math.ceil(Math.ceil(summedAttack / def) * totalSkillCoeff) * criticalRatio;
     var overedDamage = 0.0;
+    var shivaBuff = false;
 
     var limitValues = [[2500000, 0.01], [1800000, 0.05], [1700000, 0.30], [1500000, 0.60]];
 
