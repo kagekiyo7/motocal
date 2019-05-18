@@ -79,6 +79,11 @@ module.exports._ua = (function (u) {
     }
 })(window.navigator.userAgent.toLowerCase());
 
+var onOffSwitch = {　
+    "無効": false,
+    "有効": true
+};
+
 var zenith = {　//得意武器
     "無し": 0,
     "★1": 0.01,
@@ -1678,6 +1683,7 @@ var supportAbilities = {
 };
 
 // exports
+module.exports.onOffSwitch = onOffSwitch;
 module.exports.zenith = zenith;
 module.exports.zenithDA = zenithDABonus;
 module.exports.zenithTA = zenithTABonus;
