@@ -1973,7 +1973,7 @@ module.exports.getInitialTotals = function (prof, chara, summon) {
         for (var s = 0; s < summon.length; s++) {
             var selfElement = summon[s].selfElement != undefined ? summon[s].selfElement : "fire";
             var friendElement = summon[s].friendElement != undefined ? summon[s].friendElement : "fire";
-            var shivabuff = summon[s].shivabuff != undefined ? summon[s].shivabuff : "false";
+            var shivaBuff = summon[s].shivaBuff != undefined ? summon[s].shivaBuff : "false";
 
             var totalSummon = {
                 magna: 1.0,
