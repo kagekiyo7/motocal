@@ -452,7 +452,7 @@ var Summon = CreateClass({
                         <th className="bg-primary">{intl.translate("シヴァバフ", locale)}</th>
                         <td>
                             <FormControl componentClass="select" value={this.state.shivaBuff}
-                                         onChange={this.handleSelectEvent.bind(this, "onOffSwitch")}>{selector[locale].onOffSwitch}</FormControl>
+                                         onChange={this.handleSelectEvent.bind(this, "shivaBuff")}>{selector[locale].onOffSwitch}</FormControl>
                         </td>
                     </tr>
 
