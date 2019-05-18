@@ -173,6 +173,9 @@ module.exports.calcDamage = function (summedAttack, totalSkillCoeff, criticalRat
     for (var index = 0; index < 4; index++) {
         // Damage cap calculation
         var limitValue = limitValues[index][0] * (1.0 + damageLimit);
+        if (shivaBuff) {
+            limitValue += 600000;
+        }
         var limitRatio = limitValues[index][1];
 
         // Subtract only by the extent exceeding the attenuation line
@@ -208,6 +211,9 @@ module.exports.calcOugiDamage = function (summedAttack, totalSkillCoeff, critica
     for (var index = 0; index < 4; index++) {
         // Damage cap calculation
         var limitValue = limitValues[index][0] * (1.0 + ougiDamageLimit);
+        if (shivaBuff) {
+            limitValue += 500000;
+        }
         var limitRatio = limitValues[index][1];
 
         // Subtract only by the extent exceeding the attenuation line
