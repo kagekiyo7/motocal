@@ -2084,6 +2084,18 @@ module.exports.selector.summonAmounts = summonAmountList.map(function (opt) {
     return <option value={opt} key={opt}>{opt}</option>;
 });
 
+module.exports.selector.ja.onOffSwitch = Object.keys(onOffSwitch).map(function (opt) {
+    return <option value={opt} key={opt}>{onOffSwitch[opt].name}</option>;
+});
+module.exports.selector.en.onOffSwitch = Object.keys(onOffSwitch).map(function (opt) {
+    return <option value={opt} key={opt}>{intl.translate(onOffSwitch[opt].name, "en")}</option>;
+});
+module.exports.selector.zh.onOffSwitch = Object.keys(onOffSwitch).map(function (opt) {
+    return <option value={opt} key={opt}>{intl.translate(onOffSwitch[opt].name, "zh")}</option>;
+});
+
+
+
 module.exports.selector.zenithAttack = zenithAttackBonus.map(function (opt) {
     return <option value={opt} key={opt}>{opt}</option>;
 });
