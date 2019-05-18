@@ -11,6 +11,7 @@ var bahamutRelation = GlobalConst.bahamutRelation;
 var bahamutFURelation = GlobalConst.bahamutFURelation;
 var supportAbilities = GlobalConst.supportAbilities;
 var selector = GlobalConst.selector;
+var onOffSwitch = GlobalConst.onOffSwitch;
 var zenith = GlobalConst.zenith;
 var Jobs = GlobalConst.Jobs;
 var armTypes = GlobalConst.armTypes;
@@ -209,7 +210,8 @@ var Summon = CreateClass({
             criticalRatio: 0.0,
             ougiDamage : 0.0,
             tenshiDamageUP : 0.0,
-            damageLimit : 0.0
+            damageLimit : 0.0,
+            shivaBuff : false
         };
     },
     componentDidMount: function () {
@@ -443,6 +445,16 @@ var Summon = CreateClass({
                         <td>
                             <FormControl type="number" min="0" value={this.state.ougiDamage} onBlur={this.handleOnBlur}
                                          onChange={this.handleEvent.bind(this, "ougiDamage")}/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                    <tr>
+                        <th className="bg-primary">{intl.translate("シヴァバフ", locale)}</th>
+                        <td>
+                            <FormControl componentClass="select" value={this.state.shivaBuff}
+                                         onChange={this.handleSelectEvent.bind(this, "onOffSwitch")}>{selector[locale].onOffSwitch}</FormControl>
                         </td>
                     </tr>
                     </tbody>
