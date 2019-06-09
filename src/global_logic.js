@@ -554,7 +554,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         var normalLesserSante = totals[key]["normalLesserSante"] * totalSummon["zeus"];
         normalLesserSante += totals[key]["normalOtherLesserSante"];
         var magnaLesserSante = totals[key]["magnaLesserSante"] * totalSummon["magna"];
-        var armTAupNormal = normalSante + normalLesserSante <= GlobalConst.LIMIT_SKILL_INFO[normalTA] ? normalSante + normalLesserSante : GlobalConst.LIMIT_SKILL_INFO[normalTA];
+        var armTAupNormal = normalSante + normalLesserSante <= GlobalConst.LIMIT_SKILL_INFO.normalTA ? normalSante + normalLesserSante : GlobalConst.LIMIT_SKILL_INFO.normalTA;
         var armTAupMagna = magnaSante + magnaLesserSante <= 50.0 ? magnaSante + magnaLesserSante : 50.0;
         var armTAupBaha = totals[key]["bahaTA"] <= 50.0 ? totals[key]["bahaTA"] : 50.0;
         var armTAupOther = totals[key]["TAbuff"] <= 50.0 ? totals[key]["TAbuff"] : 50.0;
