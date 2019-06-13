@@ -1048,7 +1048,7 @@ var Result = CreateClass({
                 }
 
                 if (sw.switchCriticalAttack) {
-                    tablebody.push(m.data.Djeeta.criticalAttack);
+                    tablebody.push(Math.ceil(m.data.Djeeta.criticalAttack));
                     ++colSize;
                 }
 
