@@ -607,7 +607,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             var criticalRatio = 1.0
         }
 
-        var criticalAttack = parseInt(totalAttack * criticalRatio);
+        var criticalAttack = totalAttack * criticalRatio;
         var expectedOugiGage = buff["ougiGage"] + totals[key]["ougiGageBuff"] - totals[key]["ougiDebuff"];
         expectedOugiGage *= taRate * 37.0 + (1.0 - taRate) * (daRate * 22.0 + (1.0 - daRate) * 10.0);
         
