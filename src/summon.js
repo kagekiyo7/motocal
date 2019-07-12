@@ -209,7 +209,8 @@ var Summon = CreateClass({
             criticalRatio: 0.0,
             ougiDamage : 0.0,
             tenshiDamageUP : 0.0,
-            damageLimit : 0.0
+            damageLimit : 0.0,
+            shivaBuff: false
         };
     },
     componentDidMount: function () {
@@ -269,10 +270,12 @@ var Summon = CreateClass({
     },
     handleSelectEvent: function (key, e) {
         var newState = this.state;
-        newState[key] = e.target.value;
-        this.setState(newState);
-        this.props.onChange(this.props.id, newState)
-    },
+
+        if (e.target.type === "checkbox") {
+            newState[key] = e.target.checked;
+        } else {
+            newState[key] = e.target.value;
+        }
     handleOnBlur: function (e) {
         this.props.onChange(this.props.id, this.state)
     },
@@ -446,6 +449,16 @@ var Summon = CreateClass({
                         </InputGroup></td>
                     </tr>
                     </tbody>
+
+                    <TextWithTooltip tooltip={intl.translate("シヴァバフ説明", locale)} id={"tooltip-shiva-buff-detail"}>
+                    <tr>
+                        <th className="bg-primary">{intl.translate("シヴァバフ", locale)}</th>
+                        <td><Checkbox inline checked={this.state.shivaBuff}
+                                      onChange={this.handleSelectEvent.bind(this, "shivaBuff")}>
+                            </Checkbox>
+                        </InputGroup></td>
+                    </tr>
+                    </TextWithTooltip>
                 </table>
 
                 <ButtonGroup style={{"width": "100%"}}>
