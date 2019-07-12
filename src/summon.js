@@ -276,6 +276,10 @@ var Summon = CreateClass({
         } else {
             newState[key] = e.target.value;
         }
+        
+        this.setState(newState);
+        this.props.onChange(this.props.id, newState, false);
+    },
     handleOnBlur: function (e) {
         this.props.onChange(this.props.id, this.state)
     },
