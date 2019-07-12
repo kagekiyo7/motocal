@@ -1,6 +1,6 @@
 var React = require('react');
 var intl = require('./translate.js');
-var {FormControl, InputGroup, FormGroup, Col, Row, Grid, Label, Button, ButtonGroup} = require('react-bootstrap');
+var {FormControl, InputGroup, FormGroup, Col, Row, Grid, Label, Button, ButtonGroup, Checkbox} = require('react-bootstrap');
 var {ColP} = require('./gridp.js');
 var GlobalConst = require('./global_const.js');
 var CreateClass = require('create-react-class');
