@@ -459,8 +459,7 @@ var Summon = CreateClass({
                         <th className="bg-primary">{intl.translate("シヴァバフ", locale)}</th>
                         <td><Checkbox inline checked={this.state.shivaBuff}
                                       onChange={this.handleSelectEvent.bind(this, "shivaBuff")}>
-                            </Checkbox>
-                        </InputGroup></td>
+                            </Checkbox></td>
                     </tr>
                     </TextWithTooltip>
                 </table>
