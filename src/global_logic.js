@@ -554,9 +554,8 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         if (totals[key]["EXLB"]["WED"]) {
             otherCoeff *= 1.10;
         }
-        if (totalSummon["shivaBuff"]) {
-            otherCoeff *= 2.0;
-        }
+
+        otherCoeff *= totalSummon["shivaBuff"] ? 2.0 : 1;
 
         // Character Emnity
         var charaHaisuiCoeff = 1.0 + 0.01 * totals[key]["charaHaisui"];
