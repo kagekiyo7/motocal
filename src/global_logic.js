@@ -793,7 +793,17 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         const ougiDamageLimitValuesWithoutCritical = _initLimitValues(1.0 + ougiDamageLimit, BASE_LIMIT_VALUES.ougiDamage);
 
         // "damage" is a single attack damage without additional damage (with attenuation and skill correction)
-        var damage = module.exports.calcDamage(summedAttack, totalSkillCoeff, criticalRatio, prof.enemyDefense, prof.defenseDebuff, enemyResistance, additionalDamage, damageUP, normalDamageLimitValues);
+        var damage = 0;
+        let totalCritticalRatio = 0;
+        if (Object.keys(criticalArray).length > 0) {
+            for (var attackRatio in criticalArray) {
+                totalCritticalRatio += criticalArray[attackRatio];
+                damage += criticalArray[attackRatio] * module.exports.calcDamage(summedAttack, totalSkillCoeff, attackRatio, prof.enemyDefense, prof.defenseDebuff, enemyResistance, additionalDamage, damageUP, normalDamageLimitValues);
+            }
+            damage += (1.0 - totalCritticalRatio) * module.exports.calcDamage(summedAttack, totalSkillCoeff, 1.0, prof.enemyDefense, prof.defenseDebuff, enemyResistance, additionalDamage, damageUP, normalDamageLimitValues);
+        } else {
+            damage = module.exports.calcDamage(summedAttack, totalSkillCoeff, 1.0, prof.enemyDefense, prof.defenseDebuff, enemyResistance, additionalDamage, damageUP, normalDamageLimitValues);
+        }
 
         // Use damage in case of no critical to correct skill expectation
         var damageWithoutCritical = module.exports.calcDamage(summedAttack, totalSkillCoeff, 1.0, prof.enemyDefense, prof.defenseDebuff, enemyResistance, additionalDamage, damageUP, normalDamageLimitValuesWithoutCritical);
