@@ -912,7 +912,10 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         [damage, damageWithoutCritical, ougiDamage, chainBurstSupplemental] = supplemental.calcOthersDamage(supplementalDamageArray, [damage, damageWithoutCritical, ougiDamage, chainBurstSupplemental], {remainHP: totals[key]["remainHP"]});
         // Chain burst damage is calculated based on the assumption that "there is only one who has the same damage as that character has chain number people"
         var chainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, buff["chainNumber"], module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
-
+        var twoChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, 2, module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
+        var threeChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, 3, module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
+        var fourChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, 4, module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
+	    
         var expectedCycleDamagePerTurn;
         if (expectedTurn === Infinity) {
             expectedCycleDamagePerTurn = expectedAttack * damage;
@@ -997,6 +1000,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             totalExpected: sougou_kaisuu_gikou,
             skilldata: coeffs,
             expectedOugiGage: expectedOugiGage,
+	    ougiGageBuff: ougiGageBuff,
             // Tips and tricks
             damage: damage * expectedAttack,
             // Net damage
@@ -1018,6 +1022,13 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             ougiDamageLimitValues: ougiDamageLimitValues,
             normalDamageLimitValuesWithoutCritical: normalDamageLimitValuesWithoutCritical,
             ougiDamageLimitValuesWithoutCritical: ougiDamageLimitValuesWithoutCritical,
+            twoChainBurst: twoChainBurst,
+            threeChainBurst: threeChainBurst,
+            fourChainBurst: fourChainBurst,
+            ougiGageLimit: (totals["Djeeta"]["job"] === "kengo" || totals[key] === "ヴァジラ") ? 200 : 100,
+            // For newCalcTotalDamage
+            ougiGage: 0,
+            attackMode: "",
         };
     }
 
@@ -1048,6 +1059,68 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
     res["Djeeta"]["averageChainBurst"] = averageChainBurst / cnt;
     res["Djeeta"]["totalOugiDamage"] = totalOugiDamage;
     res["Djeeta"]["totalOugiDamageWithChain"] = totalOugiDamage + res["Djeeta"]["averageChainBurst"];
+	
+const newCalcTotalDamage = function(turn) {
+    let totalDamage = 0;
+    // 奥義時に発生する「奥義ゲージボーナス」のための奥義回数カウンター
+    let countOugi = 0;
+    // 既に処理を終えたキャラの奥義ゲージボーナスのために別にカウンターを用意する
+    let countLastTurnOugi = 0;
+       
+    for (let i = 0; i < turn; i++){
+        ougiCount = 0;
+        for (key in res) {
+            if (totals[key]["isConsideredInAverage"]) {
+                // 他キャラ奥義時のゲージボーナス(後続キャラのみ)
+                res[key].ougiGage += countOugi ? Math.max(0, Math.ceil(10 * res[key].ougiGageBuff * countOugi)) : 0;
+                
+                // 既に奥義発動してない場合に限り、奥義を打ったキャラの前にいるキャラもゲージボーナスが発生
+                res[key].ougiGage += (countLastTurnOugi && res[key].attackMode != "ougi") ? Math.max(0, Math.ceil(10 * res[key].ougiGageBuff * countLastTurnOugi)) : 0;
+            
+                // 奥義ゲージが奥義ゲージ最大値を上回らないようにする
+                res[key].ougiGage = Math.min(res[key].ougiGageLimit, res[key].ougiGage);
+                
+                // ougi attack (200%)
+                if (res[key].ougiGage >= 200) {
+                    res[key].ougiGage = 0;
+                    totalDamage += res[key].ougiDamage * 2;
+                    countOugi += 2;
+                    res[key].attackMode = "ougi"
+                // ougi attack (100%)
+                } else if (res[key].ougiGage >= 100) {
+                    res[key].ougiGage -= 100;
+                    res[key].ougiGage = Math.max(0, ougiGage);
+                    totalDamage += res[key].ougiDamage;
+                    countOugi += 1;
+                    res[key].attackMode = "ougi"
+                // normal attack
+                } else {
+                    totalDamage += res[key].damageWithMultiple;
+                    res[key].ougiGage += res[key].expectedOugiGage;
+                    res[key].attackMode = "normal"
+                }
+            }
+        }
+        
+        // chain attack
+        if (countOugi === 2) {
+            totalDamage += res["Djeeta"].twoChainBurst;
+        } else if (countOugi === 3) {
+            totalDamage += res["Djeeta"].threeChainBurst;
+        } else if (countOugi >= 4) {
+            totalDamage += res["Djeeta"].fourChainBurst;
+        }
+        
+	// 前のターンの奥義回数を記憶
+        countLastTurnOugi = 0;
+        countLastTurnOugi = countOugi;
+    }
+    return totalDamage / turn;
+}
+
+
+	
+    res["Djeeta"]["newCalcTotalDamage"] = newCalcTotalDamage(100);
 
     for (var key in totals) {
         res[key]["totalOugiDamage"] = totalOugiDamage;
