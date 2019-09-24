@@ -41,6 +41,7 @@ const {
 } = require('./skill_filter.js');
 const {range, when} = require('./support_filter');
 const epic = require('./epic');
+const newcalc = require('./newcalc.js');
 
 
 module.exports.isCosmos = function (arm) {
@@ -711,8 +712,8 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         expectedOugiGage *= uplift + (taRate * 37.0 + (1.0 - taRate) * (daRate * 22.0 + (1.0 - daRate) * 10.0));
         expectedOugiGage = expectedOugiGage < 0 ? 0 : Math.max(1.0, expectedOugiGage);
 
-        var ougiGageUpOugiBuff = buff["ougiGageUpOugi"] * ougiGageBuff;
-        var ougiGage = 100 - Math.min(99, ougiGageUpOugiBuff);
+        var ougiGageUpOugiBuff = buff["ougiGageUpOugi"];
+        var ougiGage = 100 - Math.min(99, ougiGageUpOugiBuff * ougiGageBuff);
         var minimumTurn = Math.ceil(ougiGage / ((uplift + 37.0) * ougiGageBuff));
         var expectedTurn = Math.max(minimumTurn, ougiGage / expectedOugiGage);
 
@@ -912,7 +913,10 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         [damage, damageWithoutCritical, ougiDamage, chainBurstSupplemental] = supplemental.calcOthersDamage(supplementalDamageArray, [damage, damageWithoutCritical, ougiDamage, chainBurstSupplemental], {remainHP: totals[key]["remainHP"]});
         // Chain burst damage is calculated based on the assumption that "there is only one who has the same damage as that character has chain number people"
         var chainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, buff["chainNumber"], module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
-
+        var twoChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, 2, module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
+        var threeChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, 3, module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
+        var fourChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, 4, module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
+	    
         var expectedCycleDamagePerTurn;
         if (expectedTurn === Infinity) {
             expectedCycleDamagePerTurn = expectedAttack * damage;
@@ -997,6 +1001,8 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             totalExpected: sougou_kaisuu_gikou,
             skilldata: coeffs,
             expectedOugiGage: expectedOugiGage,
+            ougiGageBuff: ougiGageBuff,
+            ougiGageUpOugiBuff: ougiGageUpOugiBuff,
             // Tips and tricks
             damage: damage * expectedAttack,
             // Net damage
@@ -1018,6 +1024,13 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             ougiDamageLimitValues: ougiDamageLimitValues,
             normalDamageLimitValuesWithoutCritical: normalDamageLimitValuesWithoutCritical,
             ougiDamageLimitValuesWithoutCritical: ougiDamageLimitValuesWithoutCritical,
+            // For newCalcTotalDamage
+            twoChainBurst: twoChainBurst,
+            threeChainBurst: threeChainBurst,
+            fourChainBurst: fourChainBurst,
+            ougiGageLimit: (totals[key]["job"] === "kengo" || totals[key] === "ヴァジラ") ? 200 : 100,
+            ougiGage: 30,
+            attackMode: "",
         };
     }
 
@@ -1048,6 +1061,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
     res["Djeeta"]["averageChainBurst"] = averageChainBurst / cnt;
     res["Djeeta"]["totalOugiDamage"] = totalOugiDamage;
     res["Djeeta"]["totalOugiDamageWithChain"] = totalOugiDamage + res["Djeeta"]["averageChainBurst"];
+    res["Djeeta"]["newCalcTotalDamage"] = newcalc.newCalcTotalDamage(totals, res, 100);
 
     for (var key in totals) {
         res[key]["totalOugiDamage"] = totalOugiDamage;
@@ -2490,6 +2504,7 @@ module.exports.getInitialTotals = function (prof, chara, summon) {
                 additionalDamageXA: null,
                 ougiDebuff: 0,
                 isConsideredInAverage: charaConsidered,
+                job: "",
                 normalBuff: charaBuffList["normalBuff"],
                 elementBuff: charaBuffList["elementBuff"],
                 elementBuffBoostBuff: 0,
