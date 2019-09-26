@@ -2,7 +2,7 @@ function newCalcTotalDamage(turn) {
     let totalDamage = 0;
     
     // 他キャラ奥義時のゲージボーナス
-    let getOugiGageBonus => {
+    let getOugiGageBonus = () => {
         let value = 0;
         for (key in res) {
             value += (res[key].attackMode != "ougi") ? Math.max(0, Math.ceil(10 * res[key].ougiGageBuff)) : 0;
@@ -13,7 +13,6 @@ function newCalcTotalDamage(turn) {
     }
        
     for (let i = 0; i < turn; i++){
-            
         for (key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 // 奥義ゲージが奥義ゲージ最大値を上回らないようにする
@@ -25,8 +24,6 @@ function newCalcTotalDamage(turn) {
                     totalDamage += res[key].ougiDamage * 2;
                     res[key].attackMode = "ougi"
                     res[key].ougiGage += getOugiGageBonus() * 2;
-                }
-                    
                 // ougi attack (100%)
                 } else if (res[key].ougiGage >= 100) {
                     res[key].ougiGage -= 100;
@@ -34,8 +31,6 @@ function newCalcTotalDamage(turn) {
                     totalDamage += res[key].ougiDamage;
                     res[key].attackMode = "ougi"
                     res[key].ougiGage += getOugiGageBonus();
-                }
-                    
                 // normal attack
                 } else {
                     totalDamage += res[key].damageWithMultiple;
