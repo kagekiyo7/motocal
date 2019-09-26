@@ -1075,7 +1075,6 @@ const newCalcTotalDamage = (turn) => {
     }
        
     for (let i = 0; i < turn; i++){
-            
         for (key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 // 奥義ゲージが奥義ゲージ最大値を上回らないようにする
@@ -1087,8 +1086,6 @@ const newCalcTotalDamage = (turn) => {
                     totalDamage += res[key].ougiDamage * 2;
                     res[key].attackMode = "ougi"
                     res[key].ougiGage += getOugiGageBonus() * 2;
-                }
-                    
                 // ougi attack (100%)
                 } else if (res[key].ougiGage >= 100) {
                     res[key].ougiGage -= 100;
@@ -1096,8 +1093,6 @@ const newCalcTotalDamage = (turn) => {
                     totalDamage += res[key].ougiDamage;
                     res[key].attackMode = "ougi"
                     res[key].ougiGage += getOugiGageBonus();
-                }
-                    
                 // normal attack
                 } else {
                     totalDamage += res[key].damageWithMultiple;
