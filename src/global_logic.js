@@ -1064,7 +1064,7 @@ const newCalcTotalDamage = (turn) => {
     let totalDamage = 0;
     
     // 他キャラ奥義時のゲージボーナス
-    let getOugiGageBonus => {
+    let getOugiGageBonus() => {
         let value = 0;
         for (key in res) {
             value += (res[key].attackMode != "ougi") ? Math.max(0, Math.ceil(10 * res[key].ougiGageBuff)) : 0;
