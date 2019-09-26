@@ -1,5 +1,6 @@
 function newCalcTotalDamage(turn) {
     let totalDamage = 0;
+    let countOugi = 0;
     
     // 他キャラ奥義時のゲージボーナス
     let getOugiGageBonus = () => {
@@ -13,21 +14,24 @@ function newCalcTotalDamage(turn) {
     }
        
     for (let i = 0; i < turn; i++){
+	countOugi = 0;
         for (key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 // ougi attack (200%)
                 if (res[key].ougiGage >= 200) {
                     res[key].ougiGage = 0;
                     totalDamage += res[key].ougiDamage * 2;
-                    res[key].attackMode = "ougi"
                     res[key].ougiGage += getOugiGageBonus() * 2;
+                    countOugi += 2;
+                    res[key].attackMode = "ougi"
                 // ougi attack (100%)
                 } else if (res[key].ougiGage >= 100) {
                     res[key].ougiGage -= 100;
                     res[key].ougiGage = Math.max(0, ougiGage);
                     totalDamage += res[key].ougiDamage;
-                    res[key].attackMode = "ougi"
                     res[key].ougiGage += getOugiGageBonus();
+                    countOugi += 1;
+                    res[key].attackMode = "ougi"
                 // normal attack
                 } else {
                     totalDamage += res[key].damageWithMultiple;
