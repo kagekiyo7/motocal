@@ -1083,17 +1083,17 @@ const newCalcTotalDamage = (turn) => {
                 if (res[key].ougiGage >= 200) {
                     res[key].ougiGage = 0;
                     totalDamage += res[key].ougiDamage * 2;
-                    res[key].ougiGage += getOugiGageBonus() * 2;
                     countOugi += 2;
                     res[key].attackMode = "ougi"
+                    res[key].ougiGage += getOugiGageBonus() * 2;
                 // ougi attack (100%)
                 } else if (res[key].ougiGage >= 100) {
                     res[key].ougiGage -= 100;
                     res[key].ougiGage = Math.max(0, ougiGage);
                     totalDamage += res[key].ougiDamage;
-                    res[key].ougiGage += getOugiGageBonus();
                     countOugi += 1;
                     res[key].attackMode = "ougi"
+                    res[key].ougiGage += getOugiGageBonus();
                 // normal attack
                 } else {
                     totalDamage += res[key].damageWithMultiple;
