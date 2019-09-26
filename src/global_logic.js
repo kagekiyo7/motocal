@@ -1060,23 +1060,24 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
     res["Djeeta"]["totalOugiDamage"] = totalOugiDamage;
     res["Djeeta"]["totalOugiDamageWithChain"] = totalOugiDamage + res["Djeeta"]["averageChainBurst"];
 	
-const newCalcTotalDamage = function(turn) {
+const newCalcTotalDamage = (turn) => {
     let totalDamage = 0;
-    // 奥義時に発生する「奥義ゲージボーナス」のための奥義回数カウンター
-    let countOugi = 0;
-    // 既に処理を終えたキャラの奥義ゲージボーナスのために別にカウンターを用意する
-    let countLastTurnOugi = 0;
+    
+    // 他キャラ奥義時のゲージボーナス
+    let getOugiGageBonus => {
+        let value = 0;
+        for (key in res) {
+            value += (res[key].attackMode != "ougi") ? Math.max(0, Math.ceil(10 * res[key].ougiGageBuff)) : 0;
+            // ゲージ最大値を上回らないようにする
+            value = Math.min(res[key].ougiGageLimit, res[key].ougiGage);
+        }
+        return value;
+    }
        
     for (let i = 0; i < turn; i++){
-        ougiCount = 0;
+            
         for (key in res) {
             if (totals[key]["isConsideredInAverage"]) {
-                // 他キャラ奥義時のゲージボーナス(後続キャラのみ)
-                res[key].ougiGage += countOugi ? Math.max(0, Math.ceil(10 * res[key].ougiGageBuff * countOugi)) : 0;
-                
-                // 既に奥義発動してない場合に限り、奥義を打ったキャラの前にいるキャラもゲージボーナスが発生
-                res[key].ougiGage += (countLastTurnOugi && res[key].attackMode != "ougi") ? Math.max(0, Math.ceil(10 * res[key].ougiGageBuff * countLastTurnOugi)) : 0;
-            
                 // 奥義ゲージが奥義ゲージ最大値を上回らないようにする
                 res[key].ougiGage = Math.min(res[key].ougiGageLimit, res[key].ougiGage);
                 
@@ -1084,15 +1085,19 @@ const newCalcTotalDamage = function(turn) {
                 if (res[key].ougiGage >= 200) {
                     res[key].ougiGage = 0;
                     totalDamage += res[key].ougiDamage * 2;
-                    countOugi += 2;
                     res[key].attackMode = "ougi"
+                    res[key].ougiGage += getOugiGageBonus() * 2;
+                }
+                    
                 // ougi attack (100%)
                 } else if (res[key].ougiGage >= 100) {
                     res[key].ougiGage -= 100;
                     res[key].ougiGage = Math.max(0, ougiGage);
                     totalDamage += res[key].ougiDamage;
-                    countOugi += 1;
                     res[key].attackMode = "ougi"
+                    res[key].ougiGage += getOugiGageBonus();
+                }
+                    
                 // normal attack
                 } else {
                     totalDamage += res[key].damageWithMultiple;
@@ -1111,10 +1116,9 @@ const newCalcTotalDamage = function(turn) {
             totalDamage += res["Djeeta"].fourChainBurst;
         }
         
-	// 前のターンの奥義回数を記憶
-        countLastTurnOugi = 0;
-        countLastTurnOugi = countOugi;
-    }
+        for (key in res) {
+            res[key].attackMode = ""
+        }
     return totalDamage / turn;
 }
 
