@@ -1111,6 +1111,7 @@ const newCalcTotalDamage = (turn) => {
         for (key in res) {
             res[key].attackMode = ""
         }
+    }
     return totalDamage / turn;
 }
 
