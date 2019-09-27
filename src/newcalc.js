@@ -4,11 +4,10 @@ function newCalcTotalDamage(totals, res, turn) {
     
     // 他キャラ奥義時のゲージボーナス
     let getOugiGageBonus = (times = 1) => {
-        let value = 0;
         for (key in res) {
-            value += (res[key].attackMode != "ougi") ? Math.max(0, Math.ceil(10 * res[key].ougiGageBuff) * times) : 0;
+            res[key].ougiGage += (res[key].attackMode != "ougi") ? Math.max(0, Math.ceil(10 * res[key].ougiGageBuff) * times) : 0;
             // 奥義ゲージ最大値を上回らないようにする
-            value = Math.min(res[key].ougiGageLimit, res[key].ougiGage);
+            res[key].ougiGage = Math.min(res[key].ougiGageLimit, res[key].ougiGage);
         }
     }
        
