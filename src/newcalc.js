@@ -27,7 +27,7 @@ function newCalcTotalDamage(totals, res, turn) {
                 // ougi attack (100%)
                 } else if (res[key].ougiGage >= 100) {
                     res[key].ougiGage -= 100;
-                    res[key].ougiGage = Math.max(0, ougiGage);
+                    res[key].ougiGage = Math.max(0, res[key].ougiGage);
                     totalDamage += res[key].ougiDamage;
                     countOugi += 1;
                     res[key].attackMode = "ougi"
@@ -43,15 +43,14 @@ function newCalcTotalDamage(totals, res, turn) {
         
 	// ターン終了時処理
         // chain attack
-        if (countOugi === 2) {
-            totalDamage += res["Djeeta"].twoChainBurst;
-        } else if (countOugi === 3) {
-            totalDamage += res["Djeeta"].threeChainBurst;
-        } else if (countOugi >= 4) {
-            totalDamage += res["Djeeta"].fourChainBurst;
-        }
-        
         for (key in res) {
+            if (countOugi === 2) {
+                totalDamage += res[key].twoChainBurst / 4;
+            } else if (countOugi === 3) {
+                totalDamage += res[key].threeChainBurst / 4;
+            } else if (countOugi >= 4) {
+                totalDamage += res[key].fourChainBurst / 4;
+            }
             res[key].attackMode = ""
         }
     }
