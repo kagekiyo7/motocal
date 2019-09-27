@@ -42,8 +42,8 @@ function newCalcTotalDamage(totals, res, turn) {
         }
         
 	// ターン終了時処理
-        // chain attack
         for (key in res) {
+            // chain attack
             if (countOugi === 2) {
                 totalDamage += res[key].twoChainBurst / 4;
             } else if (countOugi === 3) {
