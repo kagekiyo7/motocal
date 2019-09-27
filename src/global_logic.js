@@ -1122,7 +1122,7 @@ const newCalcTotalDamage = (turn) => {
 
 
 	
-    res["Djeeta"]["newCalcTotalDamage"] = newcalc.newCalcTotalDamage(100);
+    res["Djeeta"]["newCalcTotalDamage"] = newcalc.newCalcTotalDamage(totals, res, 100);
 
     for (var key in totals) {
         res[key]["totalOugiDamage"] = totalOugiDamage;
