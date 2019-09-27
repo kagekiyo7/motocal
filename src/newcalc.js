@@ -35,7 +35,7 @@ function newCalcTotalDamage(totals, res, turn) {
                 } else {
                     totalDamage += res[key].damageWithMultiple;
                     res[key].ougiGage += res[key].expectedOugiGage;
-                    Math.min(res[key].ougiGageLimit, res[key].ougiGage);
+                    res[key].ougiGage = Math.min(res[key].ougiGageLimit, res[key].ougiGage);
                     res[key].attackMode = "normal"
                 }
             }
