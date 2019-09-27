@@ -1,4 +1,4 @@
-function newCalcTotalDamage(turn) {
+function newCalcTotalDamage(totals, res, turn) {
     let totalDamage = 0;
     let countOugi = 0;
     
