@@ -21,7 +21,11 @@ function newCalcTotalDamage(totals, res, turn) {
                     totalDamage += res[key].ougiDamage * 2;
                     countOugi += 2;
                     res[key].attackMode = "ougi"
-                    getOugiGageBonus(2);
+                    for (key in res) {
+                        res[key].ougiGage += (res[key].attackMode != "ougi") ? Math.max(0, Math.ceil(10 * res[key].ougiGageBuff) * 2) : 0;
+                         // 奥義ゲージ最大値を上回らないようにする
+                        res[key].ougiGage = Math.min(res[key].ougiGageLimit, res[key].ougiGage);
+                    }
                 // ougi attack (100%)
                 } else if (res[key].ougiGage >= 100) {
                     res[key].ougiGage -= 100;
@@ -29,7 +33,11 @@ function newCalcTotalDamage(totals, res, turn) {
                     totalDamage += res[key].ougiDamage;
                     countOugi += 1;
                     res[key].attackMode = "ougi"
-                    getOugiGageBonus(1);
+                    for (key in res) {
+                        res[key].ougiGage += (res[key].attackMode != "ougi") ? Math.max(0, Math.ceil(10 * res[key].ougiGageBuff)) : 0;
+                         // 奥義ゲージ最大値を上回らないようにする
+                        res[key].ougiGage = Math.min(res[key].ougiGageLimit, res[key].ougiGage);
+                    }
                 // normal attack
                 } else {
                     totalDamage += res[key].damageWithMultiple;
