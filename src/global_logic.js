@@ -1028,7 +1028,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             fourChainBurst: fourChainBurst,
             ougiGageLimit: (totals["Djeeta"]["job"] === "kengo" || totals[key] === "ヴァジラ") ? 200 : 100,
             // For newCalcTotalDamage
-            ougiGage: 0,
+            ougiGage: 30,
             attackMode: "",
         };
     }
