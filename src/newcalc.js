@@ -45,11 +45,11 @@ function newCalcTotalDamage(totals, res, turn) {
         for (key in res) {
             // chain attack
             if (countOugi === 2) {
-                totalDamage += res[key].twoChainBurst / 4;
+                totalDamage += Math.ceil(res[key].twoChainBurst / 4);
             } else if (countOugi === 3) {
-                totalDamage += res[key].threeChainBurst / 4;
+                totalDamage += Math.ceil(res[key].threeChainBurst / 4);
             } else if (countOugi >= 4) {
-                totalDamage += res[key].fourChainBurst / 4;
+                totalDamage += Math.ceil(res[key].fourChainBurst / 4);
             }
             res[key].attackMode = ""
         }
