@@ -41,6 +41,7 @@ const {
 } = require('./skill_filter.js');
 const {range, when} = require('./support_filter');
 const epic = require('./epic');
+const newcalc = require('./newcalc.js');
 
 
 module.exports.isCosmos = function (arm) {
@@ -1121,7 +1122,7 @@ const newCalcTotalDamage = (turn) => {
 
 
 	
-    res["Djeeta"]["newCalcTotalDamage"] = newCalcTotalDamage(100);
+    res["Djeeta"]["newCalcTotalDamage"] = newcalc.newCalcTotalDamage(100);
 
     for (var key in totals) {
         res[key]["totalOugiDamage"] = totalOugiDamage;
