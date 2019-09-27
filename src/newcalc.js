@@ -41,6 +41,7 @@ function newCalcTotalDamage(totals, res, turn) {
             }
         }
         
+	// ターン終了時処理
         // chain attack
         if (countOugi === 2) {
             totalDamage += res["Djeeta"].twoChainBurst;
