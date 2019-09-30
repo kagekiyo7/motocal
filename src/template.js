@@ -459,15 +459,20 @@ var RegisteredArm = CreateClass({
         } = this.state;
 
         const armTemplateHeader = <>
-            <span>検索:</span>
-            <FormControl type="text" placeholder={intl.translate("武器名", locale)} value={filterText}
-                         onChange={this.handleEvent.bind(this, "filterText")}/>
-            <FormControl componentClass="select" value={filterElement}
-                         onChange={this.handleEvent.bind(this, "filterElement")}>{selector[locale].filterElements}</FormControl>
-            <FormControl componentClass="select" value={filterSeries}
-                         onChange={this.handleEvent.bind(this, "filterSeries")}>{selector[locale].filterSeries}</FormControl>
-            <FormControl componentClass="select" value={filterArmType}
-                         onChange={this.handleEvent.bind(this, "filterArmType")}>{selector[locale].filterArmTypes}</FormControl>
+            <div class="input-group">
+                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                 <FormControl type="text" placeholder={intl.translate("武器名", locale)} value={filterText}
+                              onChange={this.handleEvent.bind(this, "filterText")}/>
+            </div>
+            <form class="form-inline">
+                <span>{intl.translate("フィルター", locale)}:</span>
+                <FormControl componentClass="select" value={filterElement}
+                             onChange={this.handleEvent.bind(this, "filterElement")}>{selector[locale].filterElements}</FormControl>
+                <FormControl componentClass="select" value={filterSeries}
+                             onChange={this.handleEvent.bind(this, "filterSeries")}>{selector[locale].filterSeries}</FormControl>
+                <FormControl componentClass="select" value={filterArmType}
+                             onChange={this.handleEvent.bind(this, "filterArmType")}>{selector[locale].filterArmTypes}</FormControl>
+            </form>
             </>;
 
         const filterFunc = _generateArmFilterFunc(this.state, this.props.locale);
