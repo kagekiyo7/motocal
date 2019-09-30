@@ -331,11 +331,22 @@
         overflow: scroll;
     }
 
-    .armTemplate .form-control {
-        width: 45%;
-        margin-left: 10px;
-        display: inline;
+    .armTemplate .input-group {
+        margin-bottom: 10px;
+    }
+
+    
+    .armTemplate .form-inline {
+        display: flex;
         margin-bottom: 5px;
+    }
+    
+    .armTemplate .form-inline .form {
+        width: calc(100%/3);
+    }
+    
+    .armTemplate .form-inline .form-control {
+        width: 100%;
     }
 
     .armTemplate .hidden {
@@ -343,6 +354,7 @@
         height: 0;
     }
 
+    
     .onearm {
         width: calc(100%/3 - 2px);
         float: left;

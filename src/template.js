@@ -459,15 +459,22 @@ var RegisteredArm = CreateClass({
         } = this.state;
 
         const armTemplateHeader = <>
-            <span>検索:</span>
-            <FormControl type="text" placeholder={intl.translate("武器名", locale)} value={filterText}
-                         onChange={this.handleEvent.bind(this, "filterText")}/>
-            <FormControl componentClass="select" value={filterElement}
-                         onChange={this.handleEvent.bind(this, "filterElement")}>{selector[locale].filterElements}</FormControl>
-            <FormControl componentClass="select" value={filterSeries}
-                         onChange={this.handleEvent.bind(this, "filterSeries")}>{selector[locale].filterSeries}</FormControl>
-            <FormControl componentClass="select" value={filterArmType}
-                         onChange={this.handleEvent.bind(this, "filterArmType")}>{selector[locale].filterArmTypes}</FormControl>
+            <div class="input-group">
+                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                 <FormControl type="text" placeholder={intl.translate("武器名", locale)} value={filterText}
+                              onChange={this.handleEvent.bind(this, "filterText")}/>
+            </div>
+            <div class="form-inline">
+                <span class="form"><span class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-filter"></i></span>
+                <FormControl componentClass="select" value={filterElement}
+                             onChange={this.handleEvent.bind(this, "filterElement")}>{selector[locale].filterElements}</FormControl></span>
+                </span>
+                <span class="form"><FormControl componentClass="select" value={filterSeries}
+                             onChange={this.handleEvent.bind(this, "filterSeries")}>{selector[locale].filterSeries}</FormControl></span>
+                <span class="form"><FormControl componentClass="select" value={filterArmType}
+                             onChange={this.handleEvent.bind(this, "filterArmType")}>{selector[locale].filterArmTypes}</FormControl></span>
+            </div>
             </>;
 
         const filterFunc = _generateArmFilterFunc(this.state, this.props.locale);
