@@ -474,7 +474,7 @@ var RegisteredArm = CreateClass({
                              onChange={this.handleEvent.bind(this, "filterSeries")}>{selector[locale].filterSeries}</FormControl>
                 <FormControl componentClass="select" value={filterArmType}
                              onChange={this.handleEvent.bind(this, "filterArmType")}>{selector[locale].filterArmTypes}</FormControl>
-            </form>
+            </div>
             </>;
 
         const filterFunc = _generateArmFilterFunc(this.state, this.props.locale);
