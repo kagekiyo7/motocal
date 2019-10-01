@@ -464,8 +464,8 @@ var RegisteredArm = CreateClass({
                  <FormControl type="text" placeholder={intl.translate("武器名", locale)} value={filterText}
                               onChange={this.handleEvent.bind(this, "filterText")}/>
             </div>
-            <form class="form-inline">
-                <span>{intl.translate("フィルター", locale)}:</span>
+            <form class="div-inline">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-filter"></i></span>
                 <FormControl componentClass="select" value={filterElement}
                              onChange={this.handleEvent.bind(this, "filterElement")}>{selector[locale].filterElements}</FormControl>
                 <FormControl componentClass="select" value={filterSeries}
