@@ -335,9 +335,10 @@
         margin-bottom: 5px;
     }
 
-    .armTemplate .form-inline .form-control {
-        margin-bottom: 5px;
+    
+    .armTemplate .form-inline {
         display: flex;
+        margin-bottom: 5px;
     }
 
     .armTemplate .hidden {
