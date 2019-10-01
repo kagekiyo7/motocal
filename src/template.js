@@ -467,13 +467,13 @@ var RegisteredArm = CreateClass({
             <div class="form-inline">
                 <div class="row">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-filter"></i></span>
-                <div class="col-sm-3"><FormControl componentClass="select" value={filterElement}
+                    <div class="col-auto"><span class="input-group-addon"><i class="glyphicon glyphicon-filter"></i></span>
+                <FormControl componentClass="select" value={filterElement}
                              onChange={this.handleEvent.bind(this, "filterElement")}>{selector[locale].filterElements}</FormControl></div>
                 </div>
-                <div class="col-sm-3"><FormControl componentClass="select" value={filterSeries}
+                <div class="col-auto"><FormControl componentClass="select" value={filterSeries}
                              onChange={this.handleEvent.bind(this, "filterSeries")}>{selector[locale].filterSeries}</FormControl></div>
-                <div class="col-sm-3"><FormControl componentClass="select" value={filterArmType}
+                <div class="col-auto"><FormControl componentClass="select" value={filterArmType}
                              onChange={this.handleEvent.bind(this, "filterArmType")}>{selector[locale].filterArmTypes}</FormControl></div>
             </div>
             </div>
