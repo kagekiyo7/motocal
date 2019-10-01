@@ -340,6 +340,10 @@
         display: flex;
         margin-bottom: 5px;
     }
+    
+    .armTemplate .form-inline .form-control {
+        width: calc(90%/3);
+    }
 
     .armTemplate .hidden {
         overflow: hidden;
