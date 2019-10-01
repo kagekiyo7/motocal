@@ -332,17 +332,16 @@
     }
 
     .armTemplate .input-group {
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 
     
     .armTemplate .form-inline {
-        display: flex;
         margin-bottom: 5px;
     }
     
     .armTemplate .form-inline .form-control {
-        width: calc(90%/3);
+        width: calc(100%/3);
     }
 
     .armTemplate .hidden {
