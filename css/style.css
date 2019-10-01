@@ -337,14 +337,13 @@
 
     
     .armTemplate .form-inline {
-        display: flex;
-        width: calc(100%/3);
+        //display: flex;
         margin-bottom: 5px;
     }
     
-    /*.armTemplate .form-inline .form-control {
+    .armTemplate .form-inline .form-control {
         width: calc(100%/3);
-    }*/
+    }
 
     .armTemplate .hidden {
         overflow: hidden;
