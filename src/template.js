@@ -464,7 +464,7 @@ var RegisteredArm = CreateClass({
                  <FormControl type="text" placeholder={intl.translate("武器名", locale)} value={filterText}
                               onChange={this.handleEvent.bind(this, "filterText")}/>
             </div>
-            <form class="div-inline">
+            <div class="form-inline">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-filter"></i></span>
                 </div>
