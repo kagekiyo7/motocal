@@ -341,12 +341,12 @@
         margin-bottom: 5px;
     }
     
-    .armTemplate .form-inline .form-control {
+    .armTemplate .form-inline .form {
         width: calc(100%/3);
     }
     
-    .armTemplate .form-inline .form {
-        width: calc(100%/3);
+    .armTemplate .form-inline .form-control {
+        width: 100%;
     }
 
     .armTemplate .hidden {
