@@ -341,6 +341,10 @@
         margin-bottom: 5px;
     }
     
+    .armTemplate .input-group .form-control {
+        width: calc(100%/3);
+    }
+    
     .armTemplate .form-inline .form-control {
         width: calc(100%/3);
     }
