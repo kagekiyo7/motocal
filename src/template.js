@@ -464,7 +464,7 @@ var RegisteredArm = CreateClass({
                  <FormControl type="text" placeholder={intl.translate("武器名", locale)} value={filterText}
                               onChange={this.handleEvent.bind(this, "filterText")}/>
             </div>
-            <div class="form-inline">
+            <div class="form-inline"><div class="form-group">
                 <span class="form"><span class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-filter"></i></span>
                 <FormControl componentClass="select" value={filterElement}
@@ -474,7 +474,7 @@ var RegisteredArm = CreateClass({
                              onChange={this.handleEvent.bind(this, "filterSeries")}>{selector[locale].filterSeries}</FormControl></span>
                 <span class="form"><FormControl componentClass="select" value={filterArmType}
                              onChange={this.handleEvent.bind(this, "filterArmType")}>{selector[locale].filterArmTypes}</FormControl></span>
-            </div>
+            </div></div>
             </>;
 
         const filterFunc = _generateArmFilterFunc(this.state, this.props.locale);
