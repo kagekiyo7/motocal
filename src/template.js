@@ -465,7 +465,7 @@ var RegisteredArm = CreateClass({
                               onChange={this.handleEvent.bind(this, "filterText")}/>
             </div>
             <div class="input-group">
-                <span class="form"><span class="form-inline">
+               <span class="form-inline"><span class="form">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-filter"></i>
                 <FormControl componentClass="select" value={filterElement}
                              onChange={this.handleEvent.bind(this, "filterElement")}>{selector[locale].filterElements}</FormControl></span>
