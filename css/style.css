@@ -335,12 +335,6 @@
         margin-bottom: 10px;
     }
 
-    
-    .armTemplate .form-inline {
-        display: flex;
-        margin-bottom: 5px;
-    }
-    
     .armTemplate .form-inline .form {
         width: calc(100%/3);
     }
