@@ -916,7 +916,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         var twoChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, 2, module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
         var threeChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, 3, module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
         var fourChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, 4, module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
-	    
+
         var expectedCycleDamagePerTurn;
         if (expectedTurn === Infinity) {
             expectedCycleDamagePerTurn = expectedAttack * damage;
@@ -1028,7 +1028,10 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             twoChainBurst: twoChainBurst,
             threeChainBurst: threeChainBurst,
             fourChainBurst: fourChainBurst,
-            ougiGageLimit: (totals[key]["job"] === "kengo" || totals[key] === "ヴァジラ") ? 200 : 100,
+            // Temporary implementation
+            ougiGageLimit: (totals[key]["job"] === "kengo" || totals[key] === "ヴァジラ" || totals[key] === "サーヴァンツ ドロシー＆クラウディア" 
+            || totals[key] === "[最終]オクトー" || totals[key] === "オクトー" || totals[key] === "サビルバラ(イベントver)" || totals[key] === "サビルバラ" 
+            ||totals[key] === "ジン(克己浪人)" || totals[key] === "ジン(風属性ver)" || totals[key] === "ミリン" || totals[key] === "ミリン(光属性ver)") ? 200 : 100,
             ougiGage: 30,
             attackMode: "",
         };
