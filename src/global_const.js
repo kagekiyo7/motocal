@@ -1426,6 +1426,18 @@ module.exports.Jobs = {
         "DaBonus": 4.0,
         "TaBonus": 1.0
     },
+    "kengo2": {
+        "name": "剣豪",
+        "favArm1": "katana",
+        "favArm2": "bow",
+        "type": "attack",
+        "atBonus": 3000.0,
+        "kouzinBonus": 0.0,
+        "hpBonus": 1000.0,
+        "shugoBonus": 0.0,
+        "DaBonus": 4.0,
+        "TaBonus": 1.0
+    },
     "glory": {
         "name": "ザ・グローリー",
         "favArm1": "sword",
