@@ -1426,8 +1426,8 @@ module.exports.Jobs = {
         "DaBonus": 4.0,
         "TaBonus": 1.0
     },
-    "kengo2": {
-        "name": "剣豪",
+    "fffff": {
+        "name": "剣豪2",
         "favArm1": "katana",
         "favArm2": "bow",
         "type": "attack",
