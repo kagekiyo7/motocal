@@ -1029,9 +1029,9 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             threeChainBurst: threeChainBurst,
             fourChainBurst: fourChainBurst,
             // Temporary implementation
-            ougiGageLimit: (totals[key]["job"] === "kengo" || totals[key] === "ヴァジラ" || totals[key] === "サーヴァンツ ドロシー＆クラウディア" 
-            || totals[key] === "[最終]オクトー" || totals[key] === "オクトー" || totals[key] === "サビルバラ(イベントver)" || totals[key] === "サビルバラ" 
-            ||totals[key] === "ジン(克己浪人)" || totals[key] === "ジン(風属性ver)" || totals[key] === "ミリン" || totals[key] === "ミリン(光属性ver)") ? 200 : 100,
+            ougiGageLimit: (totals[key]["job"] === "kengo" || key == "ヴァジラ" || key == "サーヴァンツ ドロシー＆クラウディア" 
+            || key == "[最終]オクトー" || key == "オクトー" || key == "サビルバラ(イベントver)" || key == "サビルバラ" 
+            || key == "ジン(克己浪人)" || key == "ジン(風属性ver)" || key == "ミリン" || key == "ミリン(光属性ver)") ? 200 : 100,
             ougiGage: 30,
             attackMode: "",
         };
