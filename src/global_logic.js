@@ -1029,7 +1029,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             threeChainBurst: threeChainBurst,
             fourChainBurst: fourChainBurst,
             // Temporary implementation
-            ougiGageLimit: (totals[key]["job"] == "kengo" || totals[key]["job"] == "samurai" || key == "ヴァジラ" || key == "サーヴァンツ ドロシー＆クラウディア" 
+            ougiGageLimit: (totals[key]["job"]["kengo"] || totals[key]["job"] == "samurai" || key == "ヴァジラ" || key == "サーヴァンツ ドロシー＆クラウディア" 
             || key == "[最終]オクトー" || key == "オクトー" || key == "サビルバラ(イベントver)" || key == "サビルバラ" 
             || key == "ジン(克己浪人)" || key == "ジン(風属性ver)" || key == "ミリン" || key == "ミリン(光属性ver)") ? 200 : 100,
             ougiGage: 30,
