@@ -2507,7 +2507,7 @@ module.exports.getInitialTotals = function (prof, chara, summon) {
                 additionalDamageXA: null,
                 ougiDebuff: 0,
                 isConsideredInAverage: charaConsidered,
-                job: "",
+                //job: "",
                 normalBuff: charaBuffList["normalBuff"],
                 elementBuff: charaBuffList["elementBuff"],
                 elementBuffBoostBuff: 0,
