@@ -1,4 +1,4 @@
-function newCalcTotalDamage(totals, res, turn) {
+function newCalcTotalDamage(totals, res, buff, turn) {
     let totalDamage = 0;
     let countOugi = 0;
 
@@ -24,6 +24,20 @@ function newCalcTotalDamage(totals, res, turn) {
         }
     };
     
+    // DATA奥義効果を加味したexpectedAttack計算 全体バフを効果ターン3で行う
+    let calcExpectedAttack = () => {
+        let totalDA = Math.max(0, res[key].totalDA - buff["da"]);
+        let totalTA = Math.max(0, res[key].totalTA - buff["ta"]);
+        if (res["Djeeta"].countDATA) {
+            totalDA = res[key].totalDA;
+            totalTA = res[key].totalTA;
+        }
+        let taRate = Math.max(0, Math.min(1.0, Math.floor(totalTA * 100) / 100));
+        let daRate = Math.max(0, Math.min(1.0, Math.floor(totalDA * 100) / 100));
+        return 3.0 * taRate + (1.0 - taRate) * (2.0 * daRate + (1.0 - daRate));
+    }
+    
+    
     for (let i = 0; i < turn; i++) {
          countOugi = 0;
         for (key in res) {
@@ -47,8 +61,11 @@ function newCalcTotalDamage(totals, res, turn) {
                 // normal attack
                 } else {
                     res[key].attackMode = "normal";
-                    totalDamage += res[key].damageWithMultiple;
+                    totalDamage += res[key].pureDamage * calcExpectedAttack();
                     res[key].ougiGage = Math.min(res[key].ougiGageLimit, res[key].ougiGage + res[key].expectedOugiGage);
+                }
+                if (res[key].attackMode = "ougi" && key == "Djeeta") {
+                    res["Djeeta"].countDATA = 3;
                 }
             }
         }
@@ -65,6 +82,7 @@ function newCalcTotalDamage(totals, res, turn) {
                     totalDamage += res[key].fourChainBurst / 4;
                 }
                 res[key].attackMode = "";
+                if (res[key].countDATA) res[key].countDATA - 1;
             }
         }
     }

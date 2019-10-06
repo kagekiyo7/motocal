@@ -1032,8 +1032,9 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             ougiGageLimit: (totals[key]["job"]["name"] == "剣豪" ||totals[key]["job"]["name"] == "侍" || key == "ヴァジラ" || key == "サーヴァンツ ドロシー＆クラウディア" 
             || key == "[最終]オクトー" || key == "オクトー" || key == "サビルバラ(イベントver)" || key == "サビルバラ" 
             || key == "ジン(克己浪人)" || key == "ジン(風属性ver)" || key == "ミリン" || key == "ミリン(光属性ver)") ? 200 : 100,
-            ougiGage: 30,
+            ougiGage: key == "Djeeta" ? 100 : 30,
             attackMode: "",
+            countDATA: 0,
         };
     }
 
@@ -1064,7 +1065,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
     res["Djeeta"]["averageChainBurst"] = averageChainBurst / cnt;
     res["Djeeta"]["totalOugiDamage"] = totalOugiDamage;
     res["Djeeta"]["totalOugiDamageWithChain"] = totalOugiDamage + res["Djeeta"]["averageChainBurst"];
-    res["Djeeta"]["newCalcTotalDamage"] = newcalc.newCalcTotalDamage(totals, res, 100);
+    res["Djeeta"]["newCalcTotalDamage"] = newcalc.newCalcTotalDamage(totals, res, buff, 100);
 
     for (var key in totals) {
         res[key]["totalOugiDamage"] = totalOugiDamage;
