@@ -61,12 +61,12 @@ function newCalcTotalDamage(totals, res, turn) {
 
         // ターン終了時処理
         // chain attack
-        if (countOugiPerTurn === 2 && res[key].attackMode === "ougi") {
-            totalDamage += calcChainBurst(totalOugiPerTurn, 2, getTypeBonus(totals[key].element, res["Djeeta"].enemyElement), res[key].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
-        } else if (countOugiPerTurn === 3 && res[key].attackMode === "ougi") {
-            totalDamage += calcChainBurst(totalOugiPerTurn, 3, getTypeBonus(totals[key].element, res["Djeeta"].enemyElement), res[key].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
-        } else if (countOugiPerTurn >= 4 && res[key].attackMode === "ougi") {
-            totalDamage += calcChainBurst(totalOugiPerTurn, 4, getTypeBonus(totals[key].element, res["Djeeta"].enemyElement), res[key].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
+        if (countOugiPerTurn === 2) {
+            totalDamage += calcChainBurst(totalOugiPerTurn, 2, getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
+        } else if (countOugiPerTurn === 3) {
+            totalDamage += calcChainBurst(totalOugiPerTurn, 3, getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
+        } else if (countOugiPerTurn >= 4) {
+            totalDamage += calcChainBurst(totalOugiPerTurn, 4, getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
         }
         
         for (key in res) {
