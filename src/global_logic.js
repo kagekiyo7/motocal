@@ -1024,6 +1024,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             ougiDamageLimitValues: ougiDamageLimitValues,
             normalDamageLimitValuesWithoutCritical: normalDamageLimitValuesWithoutCritical,
             ougiDamageLimitValuesWithoutCritical: ougiDamageLimitValuesWithoutCritical,
+            enemyElement: prof.enemyElement
             // For newCalcTotalDamage
             twoChainBurst: twoChainBurst,
             threeChainBurst: threeChainBurst,
