@@ -60,7 +60,7 @@ function newCalcTotalDamage(totals, res, turn) {
         }
 
         // ターン終了時処理
-            // chain attack
+        // chain attack
         if (countOugi === 2 && res[key].attackMode === "ougi") {
             totalDamage += calcChainBurst(totalOugiPerTurn, 2, getTypeBonus(totals[key].element, res["Djeeta"].enemyElement), res[key].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
         } else if (countOugi === 3 && res[key].attackMode === "ougi") {
