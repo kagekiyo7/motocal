@@ -1,7 +1,7 @@
 function newCalcTotalDamage(totals, res, turn) {
     let {getTypeBonus, calcChainBurst} = require('./global_logic.js');
     let totalDamage = 0;
-    let countOugi = 0;
+    let countOugiPerTurn = 0;
     // For calculate Chain.
     let totalOugiPerTurn = 0;
 
@@ -28,7 +28,7 @@ function newCalcTotalDamage(totals, res, turn) {
     };
     
     for (let i = 0; i < turn; i++) {
-        countOugi = 0;
+        countOugiPerTurn = 0;
         totalOugiPerTurn = 0;
         for (key in res) {
             if (totals[key]["isConsideredInAverage"]) {
@@ -38,7 +38,7 @@ function newCalcTotalDamage(totals, res, turn) {
                     res[key].ougiGage = 0;
                     totalDamage += res[key].ougiDamage * 2;
                     totalOugiPerTurn += res[key].ougiDamage * 2;
-                    countOugi += 2;
+                    countOugiPerTurn += 2;
                     getOugiGageBonus(2);
                     getOugiGageUpOugiBuff(2)
                 // ougi attack (100%)
@@ -47,7 +47,7 @@ function newCalcTotalDamage(totals, res, turn) {
                     res[key].ougiGage = Math.max(0, res[key].ougiGage - 100);
                     totalDamage += res[key].ougiDamage;
                     totalOugiPerTurn += res[key].ougiDamage;
-                    countOugi += 1;
+                    countOugiPerTurn += 1;
                     getOugiGageBonus(1)
                     getOugiGageUpOugiBuff(1);
                 // normal attack
@@ -61,11 +61,11 @@ function newCalcTotalDamage(totals, res, turn) {
 
         // ターン終了時処理
         // chain attack
-        if (countOugi === 2 && res[key].attackMode === "ougi") {
+        if (countOugiPerTurn === 2 && res[key].attackMode === "ougi") {
             totalDamage += calcChainBurst(totalOugiPerTurn, 2, getTypeBonus(totals[key].element, res["Djeeta"].enemyElement), res[key].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
-        } else if (countOugi === 3 && res[key].attackMode === "ougi") {
+        } else if (countOugiPerTurn === 3 && res[key].attackMode === "ougi") {
             totalDamage += calcChainBurst(totalOugiPerTurn, 3, getTypeBonus(totals[key].element, res["Djeeta"].enemyElement), res[key].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
-        } else if (countOugi >= 4 && res[key].attackMode === "ougi") {
+        } else if (countOugiPerTurn >= 4 && res[key].attackMode === "ougi") {
             totalDamage += calcChainBurst(totalOugiPerTurn, 4, getTypeBonus(totals[key].element, res["Djeeta"].enemyElement), res[key].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
         }
         
