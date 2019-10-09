@@ -1,8 +1,5 @@
-let {
-    getTypeBonus, calcChainBurst,
-} = require('./global_logic.js');
-
 function newCalcTotalDamage(totals, res, turn) {
+    let {getTypeBonus, calcChainBurst} = require('./global_logic.js');
     let totalDamage = 0;
     let countOugi = 0;
     // For calculate Chain.
