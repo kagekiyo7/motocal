@@ -60,16 +60,17 @@ function newCalcTotalDamage(totals, res, turn) {
         }
 
         // ターン終了時処理
+            // chain attack
+        if (countOugi === 2 && res[key].attackMode === "ougi") {
+            totalDamage += calcChainBurst(totalOugiPerTurn, 2, getTypeBonus(totals[key].element, res["Djeeta"].enemyElement), res[key].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
+        } else if (countOugi === 3 && res[key].attackMode === "ougi") {
+            totalDamage += calcChainBurst(totalOugiPerTurn, 3, getTypeBonus(totals[key].element, res["Djeeta"].enemyElement), res[key].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
+        } else if (countOugi >= 4 && res[key].attackMode === "ougi") {
+            totalDamage += calcChainBurst(totalOugiPerTurn, 4, getTypeBonus(totals[key].element, res["Djeeta"].enemyElement), res[key].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
+        }
+        
         for (key in res) {
             if (totals[key]["isConsideredInAverage"]) {
-                // chain attack
-                if (countOugi === 2 && res[key].attackMode === "ougi") {
-                    totalDamage += calcChainBurst(totalOugiPerTurn, 2, getTypeBonus(totals[key].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
-                } else if (countOugi === 3 && res[key].attackMode === "ougi") {
-                    totalDamage += calcChainBurst(totalOugiPerTurn, 3, getTypeBonus(totals[key].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
-                } else if (countOugi >= 4 && res[key].attackMode === "ougi") {
-                    totalDamage += calcChainBurst(totalOugiPerTurn, 4, getTypeBonus(totals[key].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
-                }
                 res[key].attackMode = "";
             }
         }
