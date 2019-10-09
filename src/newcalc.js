@@ -1,8 +1,8 @@
 function newCalcTotalDamage(totals, res, turn) {
     let {getTypeBonus, calcChainBurst} = require('./global_logic.js');
     let totalDamage = 0;
-    let countOugiPerTurn = 0;
     // For calculate Chain.
+    let countOugiPerTurn = 0;
     let totalOugiPerTurn = 0;
 
     // 奥義時の他キャラゲージボーナス。自分を含む既に奥義を行ったキャラには与えられない
