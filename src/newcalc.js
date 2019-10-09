@@ -16,7 +16,7 @@ function newCalcTotalDamage(totals, res, turn) {
         }
     };
     
-    // 無名などの奥義効果 こちらは自分にも反映される
+    // 無名などの奥義効果 こちらは全員に反映される
     let getOugiGageUpOugiBuff = (times = 1) => {
         for (key in res) {
             if (totals[key]["isConsideredInAverage"]) {
@@ -60,14 +60,8 @@ function newCalcTotalDamage(totals, res, turn) {
         }
 
         // ターン終了時処理
-        // chain attack
-        if (countOugiPerTurn === 2) {
-            totalDamage += calcChainBurst(totalOugiPerTurn, 2, getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
-        } else if (countOugiPerTurn === 3) {
-            totalDamage += calcChainBurst(totalOugiPerTurn, 3, getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
-        } else if (countOugiPerTurn >= 4) {
-            totalDamage += calcChainBurst(totalOugiPerTurn, 4, getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
-        }
+        // chain burst
+        totalDamage += calcChainBurst(totalOugiPerTurn, Math.min(4, countOugiPerTurn), getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
         
         for (key in res) {
             if (totals[key]["isConsideredInAverage"]) {
