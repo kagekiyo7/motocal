@@ -40,7 +40,7 @@ function newCalcTotalDamage(totals, res, turn) {
                     totalOugiPerTurn += res[key].ougiDamage * 2;
                     countOugiPerTurn += 2;
                     getOugiGageBonus(2);
-                    getOugiGageUpOugiBuff(2)
+                    getOugiGageUpOugiBuff(2);
                 // ougi attack (100%)
                 } else if (res[key].ougiGage >= 100) {
                     res[key].attackMode = "ougi";
@@ -48,7 +48,7 @@ function newCalcTotalDamage(totals, res, turn) {
                     totalDamage += res[key].ougiDamage;
                     totalOugiPerTurn += res[key].ougiDamage;
                     countOugiPerTurn += 1;
-                    getOugiGageBonus(1)
+                    getOugiGageBonus(1);
                     getOugiGageUpOugiBuff(1);
                 // normal attack
                 } else {
