@@ -7,7 +7,7 @@ function newCalcTotalDamage(totals, res, turn) {
 
     // 奥義時の他キャラゲージボーナス。自分を含む既に奥義を行ったキャラには与えられない
     let getOugiGageBonus = (times = 1) => {
-        for (key in res) {
+        for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 res[key].ougiGage += (res[key].attackMode != "ougi") ? Math.max(0, Math.ceil(10 * res[key].ougiGageBuff) * times) : 0;
                 // 奥義ゲージ最大値を上回らないようにする
@@ -18,7 +18,7 @@ function newCalcTotalDamage(totals, res, turn) {
     
     // 無名などの奥義効果 こちらは全員に反映される
     let getOugiGageUpOugiBuff = (times = 1) => {
-        for (key in res) {
+        for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 res[key].ougiGage += Math.max(0, Math.ceil(res[key].ougiGageUpOugiBuff * res[key].ougiGageBuff) * times);
                 // 奥義ゲージ最大値を上回らないようにする
@@ -30,7 +30,7 @@ function newCalcTotalDamage(totals, res, turn) {
     for (let i = 0; i < turn; i++) {
         countOugiPerTurn = 0;
         totalOugiPerTurn = 0;
-        for (key in res) {
+        for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 // ougi attack (200%)
                 if (res[key].ougiGage >= 200) {
@@ -64,7 +64,7 @@ function newCalcTotalDamage(totals, res, turn) {
         // chain burst
         if (countOugiPerTurn > 1) totalDamage += res["Djeeta"].chainBurstSupplemental + calcChainBurst(totalOugiPerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
         
-        for (key in res) {
+        for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 res[key].attackMode = "";
             }
