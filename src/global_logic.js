@@ -828,7 +828,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
 
         var ougiDamage = module.exports.calcOugiDamage(summedAttack, totalSkillCoeff, criticalRatio, prof.enemyDefense, prof.defenseDebuff, enemyResistance, totals[key]["ougiRatio"], ougiDamageUP, damageUP, ougiFixedDamage, totals[key]["ougiBonusPlainDamage"], ougiDamageLimitValues);
 
-        var chainBurstSupplemental = 0;
+        var damageSupplemental, damageWithoutCriticalSupplemental, ougiDamageSupplemental, chainBurstSupplemental = 0;
         //Supplemental Damage is a "static" damage that is added after damage cap/defense/etc is calculated.
         var supplementalDamageArray = {};
 
@@ -910,12 +910,14 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             };
         }
 
-        [damage, damageWithoutCritical, ougiDamage, chainBurstSupplemental] = supplemental.calcOthersDamage(supplementalDamageArray, [damage, damageWithoutCritical, ougiDamage, chainBurstSupplemental], {remainHP: totals[key]["remainHP"]});
+        [damageSupplemental, damageWithoutCriticalSupplemental, ougiDamageSupplemental, chainBurstSupplemental] = supplemental.calcOthersDamage(supplementalDamageArray, [damageSupplemental, damageWithoutCriticalSupplemental, ougiDamageSupplemental, chainBurstSupplemental], {remainHP: totals[key]["remainHP"]});
         // Chain burst damage is calculated based on the assumption that "there is only one who has the same damage as that character has chain number people"
+        
+        damage += damageSupplemental;
+        damageWithoutCritical += damageWithoutCriticalSupplemental;
+        ougiDamage += ougiDamageSupplemental;
+        
         var chainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, buff["chainNumber"], module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
-        var twoChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, 2, module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
-        var threeChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, 3, module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
-        var fourChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, 4, module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
 
         var expectedCycleDamagePerTurn;
         if (expectedTurn === Infinity) {
@@ -1026,9 +1028,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             ougiDamageLimitValuesWithoutCritical: ougiDamageLimitValuesWithoutCritical,
             enemyElement: prof.enemyElement,
             // For newCalcTotalDamage
-            twoChainBurst: twoChainBurst,
-            threeChainBurst: threeChainBurst,
-            fourChainBurst: fourChainBurst,
+            chainBurstSupplemental: chainBurstSupplemental,
             // Temporary implementation
             ougiGageLimit: (totals[key]["job"]["name"] == "剣豪" ||totals[key]["job"]["name"] == "侍" || key == "ヴァジラ" || key == "サーヴァンツ ドロシー＆クラウディア" 
             || key == "[最終]オクトー" || key == "オクトー" || key == "サビルバラ(イベントver)" || key == "サビルバラ" 
