@@ -1,35 +1,48 @@
 function newCalcTotalDamage(totals, res, turn) {
-    let {getTypeBonus, calcChainBurst} = require('./global_logic.js');
+    const {getTypeBonus, calcChainBurst} = require('./global_logic.js');
     let totalDamage = 0;
     // For calculate Chain.
     let countOugiPerTurn = 0;
     let totalOugiPerTurn = 0;
 
-    // 奥義時の他キャラゲージボーナス。自分を含む既に奥義を行ったキャラには与えられない
-    let getOugiGageBonus = (times = 1) => {
+    // Gain gauge bonus for other character when ougi. 
+    // Cannot be given to characters that have already performed ougi, including yourself.
+    const getOugiGageBonus = (times = 1) => {
         for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
-                res[key].ougiGage += (res[key].attackMode != "ougi") ? Math.max(0, Math.ceil(10 * res[key].ougiGageBuff) * times) : 0;
-                // 奥義ゲージ最大値を上回らないようにする
-                res[key].ougiGage = Math.min(res[key].ougiGageLimit, res[key].ougiGage);
+                let ougiGageUp = Math.ceil(10 * res[key].ougiGageBuff);
+                if (res[key].attackMode != "ougi") res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, ougiGageUp * times));
             }
         }
     };
     
-    // 無名などの奥義効果 こちらは全員に反映される
-    let getOugiGageUpOugiBuff = (times = 1) => {
+    // Gain gauge bonus for all character when ougi effect of Unsigned Kaneshige(無銘金重) etc. 
+    const getOugiGageUpOugiBuff = (times = 1) => {
         for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
-                res[key].ougiGage += Math.max(0, Math.ceil(res[key].ougiGageUpOugiBuff * res[key].ougiGageBuff) * times);
-                // 奥義ゲージ最大値を上回らないようにする
-                res[key].ougiGage = Math.min(res[key].ougiGageLimit, res[key].ougiGage);
+                let ougiGageUp = Math.ceil(res[key].ougiGageUpOugiBuff * res[key].ougiGageBuff);
+                res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, ougiGageUp * times));
             }
         }
     };
+    
+    // set expectedOugiGage (-uplift)
+    for (let key in res) {
+        if (totals[key]["isConsideredInAverage"]) {
+            let daRate = res[key].totalDA;
+            let taRate = res[key].totalTA;
+            let ougiGageBuff = res[key].ougiGageBuff;
+            res[key].expectedOugiGageByAttack = (taRate * Math.ceil(37.0 * ougiGageBuff) + (1.0 - taRate) * (daRate * Math.ceil(22.0 * ougiGageBuff) + (1.0 - daRate) * Math.ceil(10.0 * ougiGageBuff)));
+        }
+    }
+    
     
     for (let i = 0; i < turn; i++) {
+        // Processing at start of turn.
         countOugiPerTurn = 0;
         totalOugiPerTurn = 0;
+        
+        // Processing for each character.
         for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 // ougi attack (200%)
@@ -55,18 +68,21 @@ function newCalcTotalDamage(totals, res, turn) {
                 } else {
                     res[key].attackMode = "normal";
                     totalDamage += res[key].damageWithMultiple;
-                    res[key].ougiGage = Math.min(res[key].ougiGageLimit, res[key].ougiGage + res[key].expectedOugiGage);
+                    res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + res[key].expectedOugiGageByAttack));
                 }
             }
         }
 
-        // ターン終了時処理
+        // Processing at end of turn.
         // chain burst
         if (countOugiPerTurn > 1) totalDamage += res["Djeeta"].chainBurstSupplemental + calcChainBurst(totalOugiPerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
         
         for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 res[key].attackMode = "";
+                // 高揚(uplift)
+                let uplift = Math.ceil(res[key].uplift * res[key].ougiGageBuff);
+                res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + uplift));
             }
         }
     }

@@ -1005,6 +1005,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             expectedOugiGage: expectedOugiGage,
             ougiGageBuff: ougiGageBuff,
             ougiGageUpOugiBuff: ougiGageUpOugiBuff,
+            uplift: uplift,
             // Tips and tricks
             damage: damage * expectedAttack,
             // Net damage
