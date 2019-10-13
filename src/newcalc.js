@@ -11,7 +11,7 @@ function newCalcTotalDamage(totals, res, turn) {
         for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 let ougiGageUp = Math.ceil(10 * res[key].ougiGageBuff);
-                if (res[key].attackMode != "ougi") res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, ougiGageUp * times));
+                if (res[key].attackMode != "ougi") res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + ougiGageUp * times));
             }
         }
     };
@@ -21,7 +21,7 @@ function newCalcTotalDamage(totals, res, turn) {
         for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 let ougiGageUp = Math.ceil(res[key].ougiGageUpOugiBuff * res[key].ougiGageBuff);
-                res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, ougiGageUp * times));
+                res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + ougiGageUp * times));
             }
         }
     };
