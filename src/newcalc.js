@@ -44,9 +44,9 @@ function newCalcTotalDamage(totals, res, buff, turn) {
             totalDA = res[key].totalDA;
             totalTA = res[key].totalTA;
         }
-        let taRate = Math.max(0, Math.min(1.0, Math.floor(totalTA * 100) / 100));
-        let daRate = Math.max(0, Math.min(1.0, Math.floor(totalDA * 100) / 100));
-        return 3.0 * taRate + (1.0 - taRate) * (2.0 * daRate + (1.0 - daRate));
+        let _taRate = Math.max(0, Math.min(1.0, Math.floor(totalTA * 100) / 100));
+        let _daRate = Math.max(0, Math.min(1.0, Math.floor(totalDA * 100) / 100));
+        return 3.0 * _taRate + (1.0 - _taRate) * (2.0 * _daRate + (1.0 - _daRate));
     }
     
     
