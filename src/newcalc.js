@@ -37,7 +37,7 @@ function newCalcTotalDamage(totals, res, buff, turn) {
     }
     
     // DATA奥義効果を加味したexpectedAttack計算 全体バフを効果ターン3で行う
-    let calcExpectedAttack = (key) => {
+    let calcExpectedAttack = () => {
         let totalDA = Math.max(0, res[key].totalDA - buff["da"]);
         let totalTA = Math.max(0, res[key].totalTA - buff["ta"]);
         if (res["Djeeta"].countDATA) {
