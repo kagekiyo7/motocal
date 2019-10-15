@@ -2957,6 +2957,8 @@ module.exports.treatSupportAbility = function (totals, chara, buff) {
 
 module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, storedCombinations, storedNames, displayRealHP, locale) {
     var data = {};
+    var totals = module.exports.getInitialTotals(prof, chara, summon);
+    module.exports.treatSupportAbility(totals, chara, module.exports.getTotalBuff(prof));
 
     var minMaxArr = {
         "totalAttack": {"max": 0, "min": 0},
@@ -2964,6 +2966,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
         "criticalAttack": {"max": 0, "min": 0},
         "totalExpected": {"max": 0, "min": 0},
         "expectedCycleDamagePerTurn": {"max": 0, "min": 0},
+        "newCalcTotalDamage": {"max": 0, "min": 0},
         "averageAttack": {"max": 0, "min": 0},
         "averageTotalExpected": {"max": 0, "min": 0},
         "averageCyclePerTurn": {"max": 0, "min": 0},
@@ -2986,6 +2989,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
         var AllCycleDamagePerTurn = [["残りHP(%)"]];
         var AllCriticalAttack = [["残りHP(%)"]];
         var AllTotalExpected = [["残りHP(%)"]];
+        var AllNewCalcTotalDamage = [["残りHP(%)"]];
         var AllAverageTotalAttack = [["残りHP(%)"]];
         var AllAverageTotalExpected = [["残りHP(%)"]];
         var AllAverageCycleDamagePerTurn = [["残りHP(%)"]];
@@ -3016,6 +3020,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
         var CriticalAttack = [["残りHP(%)"]];
         var TotalExpected = [["残りHP(%)"]];
         var CycleDamagePerTurn = [["残りHP(%)"]];
+        var NewCalcTotalDamage = [["残りHP(%)"]];
         var AverageTotalExpected = [["残りHP(%)"]];
         var AverageTotalAttack = [["残りHP(%)"]];
         var AverageCriticalAttack = [["残りHP(%)"]];
@@ -3032,6 +3037,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
             CriticalAttack[0].push(title);
             TotalExpected[0].push(title);
             CycleDamagePerTurn[0].push(title);
+            NewCalcTotalDamage[0].push(title);
             AverageTotalExpected[0].push(title);
             AverageTotalAttack[0].push(title);
             AverageCycleDamagePerTurn[0].push(title);
@@ -3044,6 +3050,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                 AllCriticalAttack[0].push("[" + summonHeader + "] " + title);
                 AllTotalExpected[0].push("[" + summonHeader + "] " + title);
                 AllCycleDamagePerTurn[0].push("[" + summonHeader + "] " + title);
+                AllNewCalcTotalDamage[0].push("[" + summonHeader + "] " + title);
                 AllAverageTotalExpected[0].push("[" + summonHeader + "] " + title);
                 AllAverageTotalAttack[0].push("[" + summonHeader + "] " + title);
                 AllAverageCriticalAttack[0].push("[" + summonHeader + "] " + title);
@@ -3183,6 +3190,9 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                     
                     newExpectedCycleDamagePerTurn /= (onedata[key].expectedTurn === Infinity ? 1 : onedata[key].expectedTurn + 1);
                     
+                    onedata[key].damage = newDamage * newTotalExpected;
+                    onedata[key].ougiDamage = newOugiDamage;
+                    
                     var hp;
                     if (displayRealHP) {
                         // Actual HP
@@ -3202,6 +3212,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                             TotalExpected.push([hp]);
                             CriticalAttack.push([hp]);
                             CycleDamagePerTurn.push([hp]);
+                            NewCalcTotalDamage.push([hp]);
                             AverageTotalAttack.push([hp]);
                             AverageTotalExpected.push([hp]);
                             AverageCycleDamagePerTurn.push([hp]);
@@ -3215,6 +3226,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                                 CriticalAttack[index].push(null);
                                 TotalExpected[index].push(null);
                                 TotalHP[index].push(null);
+                                NewCalcTotalDamage[index].push(null);
                                 AverageTotalAttack[index].push(null);
                                 AverageTotalExpected[index].push(null);
                                 AverageCycleDamagePerTurn[index].push(null);
@@ -3231,6 +3243,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                                     AllTotalExpected.push([hp]);
                                     AllCriticalAttack.push([hp]);
                                     AllCycleDamagePerTurn.push([hp]);
+                                    AllNewCalcTotalDamage.push([hp]);
                                     AllAverageTotalAttack.push([hp]);
                                     AllAverageTotalExpected.push([hp]);
                                     AllAverageCycleDamagePerTurn.push([hp]);
@@ -3244,6 +3257,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                                         AllCriticalAttack[allindex].push(null);
                                         AllTotalExpected[allindex].push(null);
                                         AllTotalHP[allindex].push(null);
+                                        AllNewCalcTotalDamage[allindex].push(null);
                                         AllAverageTotalAttack[allindex].push(null);
                                         AllAverageTotalExpected[allindex].push(null);
                                         AllAverageCycleDamagePerTurn[allindex].push(null);
@@ -3269,6 +3283,8 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                         AverageCycleDamagePerTurn[index][j + 1] += parseInt(newExpectedCycleDamagePerTurn / cnt);
                         AverageCriticalAttack[index][j + 1] += parseInt(onedata[key].criticalRatio * newTotalAttack / cnt)
                     }
+                    NewCalcTotalDamage[index][j + 1] = parseInt(newcalc.newCalcTotalDamage(totals, onedata, 100));
+                    
                 }
             }
 
@@ -3292,10 +3308,11 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                     AllCriticalAttack[allindex][allj] = CriticalAttack[index][j + 1];
                     AllTotalExpected[allindex][allj] = TotalExpected[index][j + 1];
                     AllCycleDamagePerTurn[allindex][allj] = CycleDamagePerTurn[index][j + 1];
+                    AllNewCalcTotalDamage[allindex][allj] = NewCalcTotalDamage[index][j + 1];
                     AllAverageTotalExpected[allindex][allj] = AverageTotalExpected[index][j + 1];
                     AllAverageTotalAttack[allindex][allj] = AverageTotalAttack[index][j + 1];
                     AllAverageCriticalAttack[allindex][allj] = AverageCriticalAttack[index][j + 1];
-                    AllAverageCycleDamagePerTurn[allindex][allj] = AverageCycleDamagePerTurn[index][j + 1]
+                    AllAverageCycleDamagePerTurn[allindex][allj] = AverageCycleDamagePerTurn[index][j + 1];
                 }
             }
         }
@@ -3308,6 +3325,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
         data[summonHeader]["averageCriticalAttack"] = AverageCriticalAttack;
         data[summonHeader]["averageAttack"] = AverageTotalAttack;
         data[summonHeader]["averageCyclePerTurn"] = AverageCycleDamagePerTurn;
+        data[summonHeader]["newCalcTotalDamage"] = NewCalcTotalDamage;
         data[summonHeader]["averageTotalExpected"] = AverageTotalExpected;
         data[summonHeader]["totalHP"] = TotalHP
     }
@@ -3320,6 +3338,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
         data[matomete]["criticalAttack"] = AllCriticalAttack;
         data[matomete]["totalExpected"] = AllTotalExpected;
         data[matomete]["expectedCycleDamagePerTurn"] = AllCycleDamagePerTurn;
+        data[matomete]["newCalcTotalDamage"] = AllNewCalcTotalDamage;
         data[matomete]["averageAttack"] = AllAverageTotalAttack;
         data[matomete]["averageCriticalAttack"] = AllAverageCriticalAttack;
         data[matomete]["averageCyclePerTurn"] = AllAverageCycleDamagePerTurn;
