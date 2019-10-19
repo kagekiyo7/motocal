@@ -2957,6 +2957,8 @@ module.exports.treatSupportAbility = function (totals, chara, buff) {
 
 module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, storedCombinations, storedNames, displayRealHP, locale) {
     var data = {};
+    var totals = module.exports.getInitialTotals(prof, chara, summon);
+    module.exports.treatSupportAbility(totals, chara, module.exports.getTotalBuff(prof));
 
     var minMaxArr = {
         "totalAttack": {"max": 0, "min": 0},
@@ -3281,8 +3283,6 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                         AverageCycleDamagePerTurn[index][j + 1] += parseInt(newExpectedCycleDamagePerTurn / cnt);
                         AverageCriticalAttack[index][j + 1] += parseInt(onedata[key].criticalRatio * newTotalAttack / cnt)
                     }
-                    var totals = module.exports.getInitialTotals(prof, chara, summon);
-                    module.exports.treatSupportAbility(totals, chara, module.exports.getTotalBuff(prof));
                     NewCalcTotalDamage[index][j + 1] = parseInt(newcalc.newCalcTotalDamage(totals, onedata, 100));
                     
                 }
