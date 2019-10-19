@@ -80,7 +80,7 @@ function newCalcTotalDamage(totals, res, buff, turn) {
                 // normal attack
                 } else {
                     res[key].attackMode = "normal";
-                    totalDamage += res[key].pureDamage * calcExpectedAttack();
+                    totalDamage += res[key].damageWithCritical * calcExpectedAttack();
                     res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + res[key].expectedOugiGageByAttack));
                 }
                 if (res[key].attackMode = "ougi" && key == "Djeeta") {
