@@ -3298,7 +3298,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                         AverageCycleDamagePerTurn[index][j + 1] += parseInt(newExpectedCycleDamagePerTurn / cnt);
                         AverageCriticalAttack[index][j + 1] += parseInt(onedata[key].criticalRatio * newTotalAttack / cnt)
                     }
-                    NewCalcTotalDamage[index][j + 1] = parseInt(newcalc.newCalcTotalDamage(totals, onedata, buff, 100));
+                    NewCalcTotalDamage[index][j + 1] = parseInt(newcalc.newCalcTotalDamage(totals, onedata, buff, 100) / cnt);
                     
                 }
             }
