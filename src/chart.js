@@ -41,7 +41,7 @@ var HPChart = CreateClass({
         }
         // State in which recalculated data is stored in res
         // res[summonind][rank]
-        return generateHaisuiData(res, armlist, summon, prof, chara, storedCombinations, storedNames, props.displayRealHP, props.locale);
+        return generateHaisuiData(res, armlist, summon, prof, chara, storedCombinations, storedNames, props.displayRealHP, props.locale, totalBuff);
     },
     componentWillReceiveProps: function (nextProps) {
         // It is called when changing the name of StoredList while opening the chart
