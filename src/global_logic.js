@@ -2970,7 +2970,7 @@ module.exports.treatSupportAbility = function (totals, chara, buff) {
     }
 };
 
-module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, storedCombinations, storedNames, displayRealHP, locale) {
+module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, storedCombinations, storedNames, displayRealHP, locale, buff) {
     var data = {};
     var totals = module.exports.getInitialTotals(prof, chara, summon);
     module.exports.treatSupportAbility(totals, chara, module.exports.getTotalBuff(prof));
@@ -3205,7 +3205,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                     
                     newExpectedCycleDamagePerTurn /= (onedata[key].expectedTurn === Infinity ? 1 : onedata[key].expectedTurn + 1);
                     
-                    onedata[key].damage = newDamage * newTotalExpected;
+                    onedata[key].damageWithCritical = newDamage;
                     onedata[key].ougiDamage = newOugiDamage;
                     
                     var hp;
@@ -3298,7 +3298,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                         AverageCycleDamagePerTurn[index][j + 1] += parseInt(newExpectedCycleDamagePerTurn / cnt);
                         AverageCriticalAttack[index][j + 1] += parseInt(onedata[key].criticalRatio * newTotalAttack / cnt)
                     }
-                    NewCalcTotalDamage[index][j + 1] = parseInt(newcalc.newCalcTotalDamage(totals, onedata, 100));
+                    NewCalcTotalDamage[index][j + 1] = parseInt(newcalc.newCalcTotalDamage(totals, onedata, buff, 100));
                     
                 }
             }
