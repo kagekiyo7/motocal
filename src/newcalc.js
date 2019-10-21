@@ -93,10 +93,11 @@ function newCalcTotalDamage(totals, res, buff, turn) {
         // chain burst
         if (countOugiPerTurn > 1) totalDamage += res["Djeeta"].chainBurstSupplemental + calcChainBurst(totalOugiPerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
         
+        res["Djeeta"].countDATA - 1;
+        
         for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 res[key].attackMode = "";
-                if (res[key].countDATA) res[key].countDATA - 1;
                 // 高揚(uplift)
                 let uplift = Math.ceil(res[key].uplift * res[key].ougiGageBuff);
                 res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + uplift));
