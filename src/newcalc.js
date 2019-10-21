@@ -37,7 +37,7 @@ function newCalcTotalDamage(totals, res, buff, turn) {
     }
     
     // DATA奥義効果を加味したexpectedAttack計算 全体バフを効果ターン3で行う
-    let calcExpectedAttack = () => {
+    let calcExpectedAttack = (key) => {
         let totalDA = Math.max(0, res[key].totalDA - buff["da"]);
         let totalTA = Math.max(0, res[key].totalTA - buff["ta"]);
         if (res["Djeeta"].countDATA) {
@@ -80,7 +80,7 @@ function newCalcTotalDamage(totals, res, buff, turn) {
                 // normal attack
                 } else {
                     res[key].attackMode = "normal";
-                    totalDamage += res[key].damageWithCritical * calcExpectedAttack();
+                    totalDamage += res[key].damageWithCritical * calcExpectedAttack(key);
                     res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + res[key].expectedOugiGageByAttack));
                 }
                 if (res[key].attackMode = "ougi" && key == "Djeeta") {
