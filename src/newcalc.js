@@ -8,7 +8,7 @@ function newCalcTotalDamage(totals, res, buff, turn) {
     // Gain gauge bonus for other character when ougi. 
     // Cannot be given to characters that have already performed ougi, including yourself.
     const getOugiGageBonus = (times = 1) => {
-        for (var key in res) {
+        for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 let ougiGageUp = Math.ceil(10 * res[key].ougiGageBuff);
                 if (res[key].attackMode != "ougi") res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + ougiGageUp * times));
@@ -18,7 +18,7 @@ function newCalcTotalDamage(totals, res, buff, turn) {
     
     // Gain gauge bonus for all character when ougi effect of Unsigned Kaneshige(無銘金重) etc. 
     const getOugiGageUpOugiBuff = (times = 1) => {
-        for (var key in res) {
+        for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 let ougiGageUp = Math.ceil(res[key].ougiGageUpOugiBuff * res[key].ougiGageBuff);
                 res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + ougiGageUp * times));
@@ -27,7 +27,7 @@ function newCalcTotalDamage(totals, res, buff, turn) {
     };
     
     // set expectedOugiGage (-uplift)
-    for (var key in res) {
+    for (let key in res) {
         if (totals[key]["isConsideredInAverage"]) {
             let daRate = res[key].totalDA;
             let taRate = res[key].totalTA;
@@ -56,7 +56,7 @@ function newCalcTotalDamage(totals, res, buff, turn) {
         totalOugiPerTurn = 0;
         
         // Processing for each character.
-        for (var key in res) {
+        for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 // ougi attack (200%)
                 if (res[key].ougiGage >= 200) {
@@ -93,7 +93,7 @@ function newCalcTotalDamage(totals, res, buff, turn) {
         // chain burst
         if (countOugiPerTurn > 1) totalDamage += res["Djeeta"].chainBurstSupplemental + calcChainBurst(totalOugiPerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
         
-        for (var key in res) {
+        for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 res[key].attackMode = "";
                 if (res[key].countDATA) res[key].countDATA - 1;
