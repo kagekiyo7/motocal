@@ -93,7 +93,7 @@ function newCalcTotalDamage(totals, res, buff, turn) {
         // chain burst
         if (countOugiPerTurn > 1) totalDamage += res["Djeeta"].chainBurstSupplemental + calcChainBurst(totalOugiPerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
         
-        res["Djeeta"].countDATA - 1;
+        res["Djeeta"].countDATA -= 1;
         
         for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
