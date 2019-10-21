@@ -83,7 +83,7 @@ function newCalcTotalDamage(totals, res, buff, turn) {
                     totalDamage += res[key].damageWithCritical * calcExpectedAttack(key);
                     res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + res[key].expectedOugiGageByAttack));
                 }
-                if (res[key].attackMode = "ougi" && key == "Djeeta") {
+                if (res[key].attackMode == "ougi" && key == "Djeeta") {
                     res["Djeeta"].countDATA = 3;
                 }
             }
