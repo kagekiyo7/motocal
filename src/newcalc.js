@@ -33,6 +33,7 @@ function newCalcTotalDamage(totals, res, buff, turn) {
         || key == "ジン(克己浪人)" || key == "ジン(風属性ver)" || key == "ミリン" || key == "ミリン(光属性ver)") ? 200 : 100;
         res[key].ougiGage = (key == "Djeeta") ? 100 : 30;
         res[key].attackMode = "";
+        res[key].countDATA = 0;
         // set expectedOugiGage (-uplift)
         if (totals[key]["isConsideredInAverage"]) {
             let daRate = res[key].totalDA;
