@@ -26,8 +26,14 @@ function newCalcTotalDamage(totals, res, buff, turn) {
         }
     };
     
-    // set expectedOugiGage (-uplift)
     for (let key in res) {
+        // Temporary implementation
+        res[key].ougiGageLimit = (totals[key]["job"]["name"] == "剣豪" ||totals[key]["job"]["name"] == "侍" || key == "ヴァジラ" || key == "サーヴァンツ ドロシー＆クラウディア" 
+        || key == "[最終]オクトー" || key == "オクトー" || key == "サビルバラ(イベントver)" || key == "サビルバラ" 
+        || key == "ジン(克己浪人)" || key == "ジン(風属性ver)" || key == "ミリン" || key == "ミリン(光属性ver)") ? 200 : 100;
+        res[key].ougiGage = (key == "Djeeta") ? 100 : 30;
+        res[key].attackMode = "";
+        // set expectedOugiGage (-uplift)
         if (totals[key]["isConsideredInAverage"]) {
             let daRate = res[key].totalDA;
             let taRate = res[key].totalTA;
