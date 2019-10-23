@@ -11,7 +11,7 @@ function newCalcTotalDamage(totals, res, turn) {
         for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 let ougiGageUp = Math.ceil(10 * res[key].ougiGageBuff);
-                if (res[key].attackMode != "ougi") res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + ougiGageUp * times));
+                if (res[key].attackMode != "ougi") res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + (ougiGageUp * times)));
             }
         }
     };
@@ -21,20 +21,20 @@ function newCalcTotalDamage(totals, res, turn) {
         for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 let ougiGageUp = Math.ceil(res[key].ougiGageUpOugiBuff * res[key].ougiGageBuff);
-                res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + ougiGageUp * times));
+                res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + (ougiGageUp * times)));
             }
         }
     };
     
     for (let key in res) {
-        // Temporary implementation
-        res[key].ougiGageLimit = (totals[key]["job"]["name"] == "剣豪" ||totals[key]["job"]["name"] == "侍" || key == "ヴァジラ" || key == "サーヴァンツ ドロシー＆クラウディア" 
-        || key == "[最終]オクトー" || key == "オクトー" || key == "サビルバラ(イベントver)" || key == "サビルバラ" 
-        || key == "ジン(克己浪人)" || key == "ジン(風属性ver)" || key == "ミリン" || key == "ミリン(光属性ver)") ? 200 : 100;
-        res[key].ougiGage = (key == "Djeeta") ? 100 : 30;
-        res[key].attackMode = "";
-        // set expectedOugiGage (-uplift)
         if (totals[key]["isConsideredInAverage"]) {
+            // Temporary implementation
+            res[key].ougiGageLimit = (totals[key]["job"]["name"] == "剣豪" ||totals[key]["job"]["name"] == "侍" || key == "ヴァジラ" || key == "サーヴァンツ ドロシー＆クラウディア" 
+            || key == "[最終]オクトー" || key == "オクトー" || key == "サビルバラ(イベントver)" || key == "サビルバラ" 
+            || key == "ジン(克己浪人)" || key == "ジン(風属性ver)" || key == "ミリン" || key == "ミリン(光属性ver)") ? 200 : 100;
+            res[key].ougiGage = (key == "Djeeta") ? 100 : 30;
+            res[key].attackMode = "";
+            // set expectedOugiGage (-uplift)
             let daRate = res[key].totalDA;
             let taRate = res[key].totalTA;
             let ougiGageBuff = res[key].ougiGageBuff;
@@ -51,7 +51,7 @@ function newCalcTotalDamage(totals, res, turn) {
         // Processing for each character.
         for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
-                // ougi attack (200%)
+                // Ougi attack (200%)
                 if (res[key].ougiGage >= 200) {
                     res[key].attackMode = "ougi";
                     res[key].ougiGage = 0;
@@ -61,7 +61,7 @@ function newCalcTotalDamage(totals, res, turn) {
                     getOugiGageBonus(2);
                     // Temporary implementation
                     if (key == "Djeeta" && res[key].ougiGageUpOugiBuff) getOugiGageUpOugiBuff(2);
-                // ougi attack (100%)
+                // Ougi attack (100%)
                 } else if (res[key].ougiGage >= 100) {
                     res[key].attackMode = "ougi";
                     res[key].ougiGage = Math.max(0, res[key].ougiGage - 100);
@@ -70,7 +70,7 @@ function newCalcTotalDamage(totals, res, turn) {
                     countOugiPerTurn += 1;
                     getOugiGageBonus(1);
                     if (key == "Djeeta" && res[key].ougiGageUpOugiBuff) getOugiGageUpOugiBuff(1);
-                // normal attack
+                // Normal attack
                 } else {
                     res[key].attackMode = "normal";
                     totalDamage += res[key].damage;
@@ -80,15 +80,17 @@ function newCalcTotalDamage(totals, res, turn) {
         }
 
         // Processing at end of turn.
-        // chain burst
+        // Chain burst
         if (countOugiPerTurn > 1) totalDamage += res["Djeeta"].chainBurstSupplemental + calcChainBurst(totalOugiPerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
         
         for (let key in res) {
             if (totals[key]["isConsideredInAverage"]) {
                 res[key].attackMode = "";
-                // 高揚(uplift)
-                let uplift = Math.ceil(res[key].uplift * res[key].ougiGageBuff);
-                res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + uplift));
+                // Give uplift(高揚) effect.
+                if (res[key].uplift) {
+                    let uplift = Math.ceil(res[key].uplift * res[key].ougiGageBuff);
+                    res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + uplift));
+                }
             }
         }
     }
