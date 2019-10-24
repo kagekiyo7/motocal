@@ -32,6 +32,7 @@ function newCalcTotalDamage(totals, res, turn) {
             res[key].ougiGageLimit = (totals[key]["job"]["name"] == "剣豪" ||totals[key]["job"]["name"] == "侍" || key == "ヴァジラ" || key == "サーヴァンツ ドロシー＆クラウディア" 
             || key == "[最終]オクトー" || key == "オクトー" || key == "サビルバラ(イベントver)" || key == "サビルバラ" 
             || key == "ジン(克己浪人)" || key == "ジン(風属性ver)" || key == "ミリン" || key == "ミリン(光属性ver)") ? 200 : 100;
+            console.log(key + res[key].ougiGageLimit);
             res[key].ougiGage = (key == "Djeeta") ? 100 : 30;
             res[key].attackMode = "";
             // set expectedOugiGage (-uplift)
