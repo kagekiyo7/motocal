@@ -39,13 +39,24 @@ function newCalcTotalDamage(totals, res, buff, turn) {
     
     // DATA奥義効果を加味したexpectedAttack, expectedOugiGage(-高揚)計算 全体バフを効果ターン3で行う
     let calcExpectedAttack = (key) => {
+        let ougiGageBuff = res[key].ougiGageBuff;
+        let TArandomNumber = Math.floor(Math.random() * 101) / 100;
+        let DArandomNumber = Math.floor(Math.random() * 101) / 100;
         let totalTA = res["Djeeta"].countDATA ? res[key].totalTA : (res[key].totalTA - buff["ta"]);
         let totalDA = res["Djeeta"].countDATA ? res[key].totalDA : (res[key].totalDA - buff["da"]);
         let taRate = Math.max(0, Math.min(1.0, Math.floor(totalTA * 100) / 100));
         let daRate = Math.max(0, Math.min(1.0, Math.floor(totalDA * 100) / 100));
-        let ougiGageBuff = res[key].ougiGageBuff;
-        res[key].expectedOugiGageByAttack = (taRate * Math.ceil(37.0 * ougiGageBuff) + (1.0 - taRate) * (daRate * Math.ceil(22.0 * ougiGageBuff) + (1.0 - daRate) * Math.ceil(10.0 * ougiGageBuff)));
-        res[key].newExpectedAttack = 3.0 * taRate + (1.0 - taRate) * (2.0 * daRate + (1.0 - daRate));
+        
+        if (TArandomNumber <= taRate) {
+            res[key].expectedOugiGageByAttack = Math.ceil(37.0 * ougiGageBuff);
+            res[key].newExpectedAttack = 3.0;
+        } else if (DArandomNumber <= daRate) {
+            res[key].expectedOugiGageByAttack = Math.ceil(22.0 * ougiGageBuff);
+            res[key].newExpectedAttack = 2.0;
+        } else {
+            res[key].expectedOugiGageByAttack = Math.ceil(10.0 * ougiGageBuff)));
+            res[key].newExpectedAttack = 1.0;
+        }
     }
     
     
