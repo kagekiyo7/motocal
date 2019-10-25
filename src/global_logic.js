@@ -1065,7 +1065,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
     res["Djeeta"]["averageChainBurst"] = averageChainBurst / cnt;
     res["Djeeta"]["totalOugiDamage"] = totalOugiDamage;
     res["Djeeta"]["totalOugiDamageWithChain"] = totalOugiDamage + res["Djeeta"]["averageChainBurst"];
-    res["Djeeta"]["newCalcTotalDamage"] = newcalc.newCalcTotalDamage(totals, res, buff, 100);
+    res["Djeeta"]["newCalcTotalDamage"] = newcalc.newCalcTotalDamage(totals, res, buff, 200);
 
     for (var key in totals) {
         res[key]["totalOugiDamage"] = totalOugiDamage;
