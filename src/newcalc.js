@@ -54,7 +54,7 @@ function newCalcTotalDamage(totals, res, buff, turn) {
             res[key].expectedOugiGageByAttack = Math.ceil(22.0 * ougiGageBuff);
             res[key].newExpectedAttack = 2.0;
         } else {
-            res[key].expectedOugiGageByAttack = Math.ceil(10.0 * ougiGageBuff)));
+            res[key].expectedOugiGageByAttack = Math.ceil(10.0 * ougiGageBuff);
             res[key].newExpectedAttack = 1.0;
         }
     }
