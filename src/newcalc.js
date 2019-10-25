@@ -42,11 +42,6 @@ function newCalcTotalDamage(totals, res, buff, turn) {
             || key == "ジン(克己浪人)" || key == "ジン(風属性ver)" || key == "ミリン" || key == "ミリン(光属性ver)") ? 200 : 100;
             res[key].ougiGage = (key == "Djeeta") ? 100 : 30;
             res[key].attackMode = "";
-            // set expectedOugiGage (-uplift)
-            let daRate = res[key].totalDA;
-            let taRate = res[key].totalTA;
-            let ougiGageBuff = res[key].ougiGageBuff;
-            res[key].expectedOugiGageByAttack = (taRate * Math.ceil(37.0 * ougiGageBuff) + (1.0 - taRate) * (daRate * Math.ceil(22.0 * ougiGageBuff) + (1.0 - daRate) * Math.ceil(10.0 * ougiGageBuff)));
         }
     }
     
@@ -60,7 +55,9 @@ function newCalcTotalDamage(totals, res, buff, turn) {
         }
         let taRate = Math.max(0, Math.min(1.0, Math.floor(totalTA * 100) / 100));
         let daRate = Math.max(0, Math.min(1.0, Math.floor(totalDA * 100) / 100));
-        return 3.0 * taRate + (1.0 - taRate) * (2.0 * daRate + (1.0 - daRate));
+        let ougiGageBuff = res[key].ougiGageBuff;
+        res[key].expectedOugiGageByAttack = (taRate * Math.ceil(37.0 * ougiGageBuff) + (1.0 - taRate) * (daRate * Math.ceil(22.0 * ougiGageBuff) + (1.0 - daRate) * Math.ceil(10.0 * ougiGageBuff)));
+        res[key].newExpectedAttack = 3.0 * taRate + (1.0 - taRate) * (2.0 * daRate + (1.0 - daRate));
     }
     
     
@@ -94,7 +91,8 @@ function newCalcTotalDamage(totals, res, buff, turn) {
                 // Normal attack
                 } else {
                     res[key].attackMode = "normal";
-                    totalDamage += res[key].damageWithCritical * calcExpectedAttack(key);
+                    calcExpectedAttack(key);
+                    totalDamage += res[key].damageWithCritical * res[key].newExpectedAttack;
                     res[key].ougiGage = Math.min(res[key].ougiGageLimit, Math.max(0, res[key].ougiGage + res[key].expectedOugiGageByAttack));
                 }
                 if (res[key].attackMode == "ougi" && key == "Djeeta") {
