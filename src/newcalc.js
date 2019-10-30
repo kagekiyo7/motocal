@@ -42,8 +42,8 @@ function newCalcTotalDamage(totals, res, buff, turn) {
         let ougiGageBuff = res[key].ougiGageBuff;
         let TArandomNumber = Math.floor(Math.random() * 101) / 100;
         let DArandomNumber = Math.floor(Math.random() * 101) / 100;
-        let totalTA = res["Djeeta"].countDATA ? res[key].totalTA : (res[key].totalTA - buff["ta"]);
-        let totalDA = res["Djeeta"].countDATA ? res[key].totalDA : (res[key].totalDA - buff["da"]);
+        let totalTA = (res["Djeeta"].countDATA > 0) ? res[key].totalTA : (res[key].totalTA - buff["ta"]);
+        let totalDA = (res["Djeeta"].countDATA > 0) ? res[key].totalDA : (res[key].totalDA - buff["da"]);
         let taRate = Math.max(0, Math.min(1.0, Math.floor(totalTA * 100) / 100));
         let daRate = Math.max(0, Math.min(1.0, Math.floor(totalDA * 100) / 100));
         
