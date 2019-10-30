@@ -39,8 +39,8 @@ function newCalcTotalDamage(totals, res, buff, turn) {
     
     // DATA奥義効果を加味したexpectedAttack, expectedOugiGage(-高揚)計算 全体バフを効果ターン3で行う
     let calcExpectedAttack = (key) => {
-        let totalTA = res["Djeeta"].countDATA ? res[key].totalTA : (res[key].totalTA - buff["ta"]);
-        let totalDA = res["Djeeta"].countDATA ? res[key].totalDA : (res[key].totalDA - buff["da"]);
+        let totalTA = (res["Djeeta"].countDATA > 0) ? res[key].totalTA : (res[key].totalTA - buff["ta"]);
+        let totalDA = (res["Djeeta"].countDATA > 0) ? res[key].totalDA : (res[key].totalDA - buff["da"]);
         let taRate = Math.max(0, Math.min(1.0, Math.floor(totalTA * 100) / 100));
         let daRate = Math.max(0, Math.min(1.0, Math.floor(totalDA * 100) / 100));
         let ougiGageBuff = res[key].ougiGageBuff;
