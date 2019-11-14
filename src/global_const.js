@@ -2970,6 +2970,8 @@ module.exports.selector.masterDamageLimit = masterDamageLimitList.map(function (
     return <option value={opt} key={opt}>{opt}</option>;
 });
 module.exports.selector.ougiTimesList = ougiTimesList.map(function (opt) {
+    return <option value={opt} key={opt}>{opt}</option>;
+});
 module.exports.selector.masterOugiGage = masterOugiGageList.map(function (opt) {
     return <option value={opt} key={opt}>{opt}</option>;
 });
