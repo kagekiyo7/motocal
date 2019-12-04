@@ -1397,7 +1397,12 @@ module.exports.Jobs = {
         "hpBonus": 600.0,
         "shugoBonus": 0.0,
         "DaBonus": 57.0,
-        "TaBonus": 3.0
+        "TaBonus": 3.0,
+        "support": {
+            "name": "TA発生時、3回目のみ攻撃力20%UP",
+            "type": "otherBuffTA",
+            "value": 20,
+        }
     },
     "rune": {
         "name": "魔法戦士",
