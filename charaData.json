@@ -763,8 +763,8 @@
         "hp": "1200",
         "minattack": "1850",
         "attack": "9900",
-        "baseDA": 7.0,
-        "baseTA": 3.0,
+        "baseDA": -1000.0,
+        "baseTA": -1000.0,
         "ougiRatio": 4.5,
         "imageURL": "./charaimgs/3040246000_01.png",
         "en": "Meteon (Holiday)"
