@@ -2487,7 +2487,7 @@ var supportAbilities = {
         "value": [
             {type: "charaUniqueDamageUP", range: range.own, assign: "add", value: 0.50},
             {type: "ougiDamageLimitBuff", range: range.own, assign: "add", value: 0.30},
-            {type: "ougiGageByAttack", range: range.own, assign: "add", value: 10.00}
+            {type: "gainOugiGage", range: range.own, assign: "add", value: 10.00}
         ]
     },
     "otherbuff_own_30": {
