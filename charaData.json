@@ -765,7 +765,7 @@
         "attack": "9900",
         "baseDA": -1000.0,
         "baseTA": -1000.0,
-        "ougiRatio": 4.5,
+        "ougiRatio": 12.5,
         "imageURL": "./charaimgs/3040246000_01.png",
         "en": "Meteon (Holiday)"
     },
