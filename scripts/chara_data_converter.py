@@ -573,6 +573,7 @@ patchingOugiRatio["サラ"] = {"ougiRatio": 5.0}
 patchingOugiRatio["レ・フィーエ"] = {"ougiRatio": 5.5}
 patchingOugiRatio["ロボミ(SSR)"] = {"ougiRatio": 12.5}
 patchingOugiRatio["シャリオス17世"] = {"ougiRatio": 12.5}
+patchingOugiRatio["ミュオン(クリスマスver)"] = {"ougiRatio": 12.5}
 
 ### SSR (Not to ougi)
 patchingOugiRatio["コルワ"] = {"ougiRatio": 0.0}
