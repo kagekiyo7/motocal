@@ -2486,7 +2486,6 @@ var supportAbilities = {
         "type": "composite",
         "value": [
             {type: "charaUniqueDamageUP", range: range.own, assign: "add", value: 0.50},
-            {type: "ougiDamageBuff", range: range.own, assign: "add", value: 1.10},
             {type: "ougiDamageLimitBuff", range: range.own, assign: "add", value: 0.30},
             {type: "ougiGageByAttack", range: range.own, assign: "add", value: 10.00}
         ]
