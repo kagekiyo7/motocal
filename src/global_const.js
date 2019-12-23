@@ -2494,8 +2494,8 @@ var supportAbilities = {
         "name": "連続攻撃が発生しない(ミュオン(クリスマスver))",
         "type": "composite",
         "value": [
-            {type: "DASupport", range: range.own, assign: "add", value: -10.00},
-            {type: "TASupport", range: range.own, assign: "add", value: -10.00}
+            {type: "DASupport", range: range.own, assign: "add", value: -100.00},
+            {type: "TASupport", range: range.own, assign: "add", value: -100.00}
         ]
     },
     "otherbuff_own_30": {
