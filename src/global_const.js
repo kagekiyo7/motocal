@@ -2490,6 +2490,14 @@ var supportAbilities = {
             {type: "gainOugiGage", range: range.own, assign: "add", value: 10.00}
         ]
     },
+    "no_multi_attack": {
+        "name": "連続攻撃が発生しない(ミュオン(クリスマスver))",
+        "type": "composite",
+        "value": [
+            {type: "DASupport", range: range.own, assign: "add", value: -10.00},
+            {type: "TASupport", range: range.own, assign: "add", value: -10.00}
+        ]
+    },
     "otherbuff_own_30": {
         "name": "攻撃30%UP/別枠乗算 (ウーフとレニー)",
         "type": "otherBuff",
