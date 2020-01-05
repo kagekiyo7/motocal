@@ -732,20 +732,23 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         var expectedTurn = Math.max(minimumTurn, ougiGage / expectedOugiGage);
 
         // "additionalRatio" considers the Fourth Pursuit effect as a normal frame
-        var additionalRatio = 0.01 * totals[key]["additionalDamage"] * totalSummon["zeus"];
-        additionalRatio += totals[key]["additionalDamageBuff"];
-        additionalRatio += buff["additionalDamage"];
-        additionalRatio += prof.shiToAiNoSekai ? 0.30 : 0;
+        const additionalRatioArray = [];
+        additionalRatioArray.push(0.01 * totals[key]["additionalDamage"] * totalSummon["zeus"]);
+        additionalRatioArray.push(totals[key]["additionalDamageBuff"]);
+        additionalRatioArray.push(buff["additionalDamage"]);
+        additionalRatioArray.push(prof.shiToAiNoSekai ? 0.30 : 0);
         if (this.sum(totals[key]["additionalDamageXA"]) > 0) {
             //additionalRatio based on attacks per turn (sturm support ability-like)
             let [saDamage, daDamage, taDamage] = totals[key]["additionalDamageXA"];
-            additionalRatio += taRate * taDamage; // additionalDamage On Triple Attack
-            additionalRatio += (1.0 - taRate) * daRate * daDamage; // additionalDamage On Double Attack
-            additionalRatio += (1.0 - taRate) * (1.0 - daRate) * saDamage; // additionalDamage On Single Attack
+            let temp = taRate * taDamage; // additionalDamage On Triple Attack
+            temp += (1.0 - taRate) * daRate * daDamage; // additionalDamage On Double Attack
+            temp += (1.0 - taRate) * (1.0 - daRate) * saDamage; // additionalDamage On Single Attack
+            additionalRatioArray.push(temp);
         }
         if (totals[key]['echoThirdHit'] > 0 && taRate > 0) {
-            additionalRatio += totals[key]['echoThirdHit'] * taRate / 3
+            additionalRatioArray.push(totals[key]['echoThirdHit'] * taRate / 3);
         }
+        const additionalRatio = additionalRatioArray.reduce((a,b)=>a+b); // Total value
 
         // Damage limit UP = Overall buff + Personal buff + skill
         var damageLimit = buff["damageLimit"];
@@ -832,19 +835,6 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             ougiDamageLimitValuesWithoutCritical = _addShivaLimitUp(ougiDamageLimitValuesWithoutCritical);
         }
 
-        // "damage" is a single attack damage without additional damage (with attenuation and skill correction)
-        const damageWithoutAdditional = module.exports.calcDamage(summedAttack, totalSkillCoeff, criticalRatio, prof.enemyDefense, prof.defenseDebuff, enemyResistance, damageUP + damageUPOnlyNormalDamage, normalDamageLimitValues);
-        const additionalDamage = damage * Math.max(0, additionalRatio);
-        var damage = damageWithoutAdditional + additionalDamage;
-        
-
-        // Use damage in case of no critical to correct skill expectation
-        var damageWithoutCritical = module.exports.calcDamage(summedAttack, totalSkillCoeff, 1.0, prof.enemyDefense, prof.defenseDebuff, enemyResistance, damageUP + damageUPOnlyNormalDamage, normalDamageLimitValuesWithoutCritical);
-        damageWithoutCritical += additionalDamage;
-        
-        // Expected critical skill ratio
-        var effectiveCriticalRatio = damage / damageWithoutCritical;
-
         // Comprehensive attack power * Expected skill expectation * Multi-shot expected value
         var sougou_kaisuu_gikou = parseInt(totalAttack * criticalRatio * expectedAttack);
 
@@ -867,6 +857,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
                 damageWithoutCritical: supplementalDamageBuff,
                 ougiDamage: supplementalDamageBuff * (1.0 + damageUP),
                 chainBurst: supplementalDamageBuff,
+                additionalDamage: supplementalDamageBuff,
                 type: "other",
             };
         }
@@ -875,6 +866,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
                 let value = Math.ceil(taRate * totals[key]["supplementalThirdHit"][key2].value * (1.0 - enemyResistance));
                 supplementalDamageArray[totals[key]["supplementalThirdHit"][key2].source] = {
                     damage: value,
+                    additionalDamage: value,
                     type: "third_hit",
                     //extraValue: taRate,
                 };
@@ -887,6 +879,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
                 damageWithoutCritical: value,
                 ougiDamage: value * (1.0 + damageUP),
                 chainBurst: value,
+                additionalDamage: value,
                 threshold: 0.80,
                 type: "hp_based",
                 //extraValue: totals[key].remainHP,
@@ -899,6 +892,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
                 damageWithoutCritical: value,
                 ougiDamage: value * (1.0 + damageUP),
                 chainBurst: value,
+                additionalDamage: value,
                 type: "djeeta_buff_based",
                 extraValue: djeetaBuffCount,
             };
@@ -906,6 +900,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             let value = Math.ceil(taRate * 100000 * (1.0 - enemyResistance));
             supplementalDamageArray["修羅の誓約"] = {
                 damage: value,
+                additionalDamage: value,
                 type: "third_hit",
                 //extraValue: taRate,
             };
@@ -916,6 +911,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
                 damageWithoutCritical: 0,
                 ougiDamage: value * (1.0 + damageUP),
                 chainBurst: 0,
+                additionalDamage: value,
                 type: "on_critical",
                 extraValue: (100 * critRate).toFixed(2),
             };
@@ -927,15 +923,35 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
                 damageWithoutCritical: value,
                 ougiDamage: value * (1.0 + damageUP),
                 chainBurst: value,
+                additionalDamage: value,
                 type: "boss_debuff_based",
                 extraValue: enemyDebuffCount,
             };
         }
-
-        [damage, damageWithoutCritical, ougiDamage, chainBurstSupplemental] = supplemental.calcOthersDamage(supplementalDamageArray, [damage, damageWithoutCritical, ougiDamage, chainBurstSupplemental], {remainHP: totals[key]["remainHP"]});
+        
+        let damageSupplemental = 0, damageWithoutCriticalSupplemental = 0, additionalDamageSupplemental = 0;
+        [damageSupplemental, damageWithoutCriticalSupplemental, ougiDamage, chainBurstSupplemental, additionalDamageSupplemental] = supplemental.calcOthersDamage(supplementalDamageArray, [damageSupplemental, damageWithoutCriticalSupplemental, ougiDamage, chainBurstSupplemental, additionalDamageSupplemental], {remainHP: totals[key]["remainHP"]});
+        
         // Chain burst damage is calculated based on the assumption that "there is only one who has the same damage as that character has chain number people"
         var chainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, buff["chainNumber"], module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
 
+        // "damage" is a single attack damage without additional damage (with attenuation and skill correction)
+        let damage = module.exports.calcDamage(summedAttack, totalSkillCoeff, criticalRatio, prof.enemyDefense, prof.defenseDebuff, enemyResistance, damageUP + damageUPOnlyNormalDamage, normalDamageLimitValues);
+        let damageWithoutAdditional = damage;
+
+        // Use damage in case of no critical to correct skill expectation
+        let damageWithoutCritical = module.exports.calcDamage(summedAttack, totalSkillCoeff, 1.0, prof.enemyDefense, prof.defenseDebuff, enemyResistance, damageUP + damageUPOnlyNormalDamage, normalDamageLimitValuesWithoutCritical);
+
+        let additionalDamage = damage * Math.max(0, additionalRatio);
+        additionalDamage += additionalRatioArray.length * additionalDamageSupplemental;
+        
+        damage += damageSupplemental + additionalDamage;
+        damageWithoutAdditional += damageSupplemental;
+        damageWithoutCritical += damageSupplemental + additionalDamage;
+        
+        // Expected critical skill ratio
+        const effectiveCriticalRatio = damage / damageWithoutCritical;
+        
         var expectedCycleDamagePerTurn;
         if (expectedTurn === Infinity) {
             expectedCycleDamagePerTurn = expectedAttack * damage;
