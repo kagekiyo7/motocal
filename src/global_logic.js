@@ -733,10 +733,10 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
 
         // "additionalRatio" considers the Fourth Pursuit effect as a normal frame
         const additionalRatioArray = [];
-        additionalRatioArray.push(0.01 * totals[key]["additionalDamage"] * totalSummon["zeus"]);
-        additionalRatioArray.push(totals[key]["additionalDamageBuff"]);
-        additionalRatioArray.push(buff["additionalDamage"]);
-        additionalRatioArray.push(prof.shiToAiNoSekai ? 0.30 : 0);
+        if (totals[key]["additionalDamage"]) additionalRatioArray.push(0.01 * totals[key]["additionalDamage"] * totalSummon["zeus"]);
+        if (totals[key]["additionalDamageBuff"]) additionalRatioArray.push(totals[key]["additionalDamageBuff"]);
+        if (buff["additionalDamage"]) additionalRatioArray.push(buff["additionalDamage"]);
+        if (prof.shiToAiNoSekai) additionalRatioArray.push(0.30);
         if (this.sum(totals[key]["additionalDamageXA"]) > 0) {
             //additionalRatio based on attacks per turn (sturm support ability-like)
             let [saDamage, daDamage, taDamage] = totals[key]["additionalDamageXA"];
@@ -748,7 +748,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         if (totals[key]['echoThirdHit'] > 0 && taRate > 0) {
             additionalRatioArray.push(totals[key]['echoThirdHit'] * taRate / 3);
         }
-        const additionalRatio = additionalRatioArray.reduce((a, b) => a + b); // Total value
+        const additionalRatio = additionalRatioArray.length ? additionalRatioArray.reduce((a, b) => a + b) : 0; // Total value of additionalRatioArray
         const additionalRatioNumber = additionalRatioArray.length;
 
         // Damage limit UP = Overall buff + Personal buff + skill
