@@ -252,9 +252,9 @@ module.exports.calcDefenseDebuff = function (defense, debuff) {
 
 module.exports.calcDamage = function (summedAttack, totalSkillCoeff, criticalRatio, enemyDefense, defenseDebuff, enemyResistance, damageUP, limitValues) {
     // Damage calculation
-    const def = module.exports.calcDefenseDebuff(enemyDefense, defenseDebuff);
-    let damage = Math.ceil(summedAttack / def) * totalSkillCoeff * criticalRatio;
-    let overedDamage = 0;
+    var def = module.exports.calcDefenseDebuff(enemyDefense, defenseDebuff);
+    var damage = Math.ceil(summedAttack / def) * totalSkillCoeff * criticalRatio;
+    var overedDamage = 0;
 
     for (const [limitValue, limitRatio] of limitValues) {
         // Damage cap calculation
@@ -266,7 +266,7 @@ module.exports.calcDamage = function (summedAttack, totalSkillCoeff, criticalRat
         }
     }
 
-    let res = damage + overedDamage;
+    var res = damage + overedDamage;
 
     // "Granted Damage Increase" is a correction after attenuation
     res *= Math.max(1.0, 1.0 + damageUP);
