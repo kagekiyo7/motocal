@@ -3243,7 +3243,7 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                     let additionalDamage = newDamage * Math.max(0, onedata[key].skilldata.additionalRatio);
                     additionalDamage = additionalDamageSupplemental * onedata[key].additionalRatioNumber;
                     
-                    newDamage += additionalDamage + damageSupplemental:
+                    newDamage += additionalDamage + damageSupplemental;
                     
                     var chainNumber = !isNaN(prof.chainNumber) ? parseInt(prof.chainNumber) : 1;
                     var newChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(chainNumber * newOugiDamage, chainNumber, module.exports.getTypeBonus(onedata[key].element, prof.enemyElement), onedata[key].skilldata.enemyResistance, onedata[key].skilldata.chainDamageUP, onedata[key].skilldata.chainDamageLimit) / chainNumber;
