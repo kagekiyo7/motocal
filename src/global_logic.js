@@ -929,7 +929,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             };
         }
         
-        let damageSupplemental = 0, damageWithoutCriticalSupplemental = 0, additionalDamageSupplemental = 0;
+        let damageSupplemental = 0, damageWithoutCriticalSupplemental = 0, chainBurstSupplemental = 0, additionalDamageSupplemental = 0;
         [damageSupplemental, damageWithoutCriticalSupplemental, ougiDamage, chainBurstSupplemental, additionalDamageSupplemental] = supplemental.calcOthersDamage(supplementalDamageArray, [damageSupplemental, damageWithoutCriticalSupplemental, ougiDamage, chainBurstSupplemental, additionalDamageSupplemental], {remainHP: totals[key]["remainHP"]});
         
         // Chain burst damage is calculated based on the assumption that "there is only one who has the same damage as that character has chain number people"
