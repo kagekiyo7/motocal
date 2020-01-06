@@ -936,8 +936,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         var chainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, buff["chainNumber"], module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
 
         // "damage" is a single attack damage without additional damage (with attenuation and skill correction)
-        let damage = module.exports.calcDamage(summedAttack, totalSkillCoeff, criticalRatio, prof.enemyDefense, prof.defenseDebuff, enemyResistance, damageUP + damageUPOnlyNormalDamage, normalDamageLimitValues);
-        let damageWithoutAdditional = damage;
+        let damage = damageWithoutAdditional = module.exports.calcDamage(summedAttack, totalSkillCoeff, criticalRatio, prof.enemyDefense, prof.defenseDebuff, enemyResistance, damageUP + damageUPOnlyNormalDamage, normalDamageLimitValues);
 
         // Use damage in case of no critical to correct skill expectation
         let damageWithoutCritical = module.exports.calcDamage(summedAttack, totalSkillCoeff, 1.0, prof.enemyDefense, prof.defenseDebuff, enemyResistance, damageUP + damageUPOnlyNormalDamage, normalDamageLimitValuesWithoutCritical);
