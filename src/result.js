@@ -1299,7 +1299,7 @@ var Result = CreateClass({
                     
                     for (var key in m.data) {
                         // Generate supplemental Damage.
-                        let damageSupplemental = 0, damageWithoutCriticalSupplemental = 0, ougiDamageSupplemental = 0, chainBurstSupplemental = 0, chainBurstSupplemental = 0, additionalDamageSupplemental = 0;
+                        let damageSupplemental = 0, damageWithoutCriticalSupplemental = 0, ougiDamageSupplemental = 0, chainBurstSupplemental = 0, additionalDamageSupplemental = 0;
                         [damageSupplemental, damageWithoutCriticalSupplemental, ougiDamageSupplemental, chainBurstSupplemental, additionalDamageSupplemental]
                         = supplemental.calcOthersDamage(m.data[key].skilldata.supplementalDamageArray, [damageSupplemental, damageWithoutCriticalSupplemental, ougiDamageSupplemental, chainBurstSupplemental, additionalDamageSupplemental], {remainHP: m.data[key].remainHP});
                         
