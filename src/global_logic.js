@@ -748,7 +748,8 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         if (totals[key]['echoThirdHit'] > 0 && taRate > 0) {
             additionalRatioArray.push(totals[key]['echoThirdHit'] * taRate / 3);
         }
-        const additionalRatio = additionalRatioArray.reduce((a,b)=>a+b); // Total value
+        const additionalRatio = additionalRatioArray.reduce((a, b) => a + b); // Total value
+        const additionalRatioNumber = additionalRatioArray.length;
 
         // Damage limit UP = Overall buff + Personal buff + skill
         var damageLimit = buff["damageLimit"];
@@ -936,14 +937,16 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         var chainBurst = chainBurstSupplemental + module.exports.calcChainBurst(buff["chainNumber"] * ougiDamage, buff["chainNumber"], module.exports.getTypeBonus(totals[key].element, prof.enemyElement), enemyResistance, chainDamageUP, chainDamageLimit);
 
         // "damage" is a single attack damage without additional damage (with attenuation and skill correction)
-        let damage = damageWithoutAdditional = module.exports.calcDamage(summedAttack, totalSkillCoeff, criticalRatio, prof.enemyDefense, prof.defenseDebuff, enemyResistance, damageUP + damageUPOnlyNormalDamage, normalDamageLimitValues);
+        let damage = module.exports.calcDamage(summedAttack, totalSkillCoeff, criticalRatio, prof.enemyDefense, prof.defenseDebuff, enemyResistance, damageUP + damageUPOnlyNormalDamage, normalDamageLimitValues);
+        let damageWithoutAdditional = damage;
 
         // Use damage in case of no critical to correct skill expectation
         let damageWithoutCritical = module.exports.calcDamage(summedAttack, totalSkillCoeff, 1.0, prof.enemyDefense, prof.defenseDebuff, enemyResistance, damageUP + damageUPOnlyNormalDamage, normalDamageLimitValuesWithoutCritical);
 
         let additionalDamage = damage * Math.max(0, additionalRatio);
-        additionalDamage += additionalRatioArray.length * additionalDamageSupplemental;
+        additionalDamage += additionalDamageSupplemental * additionalRatioNumber;
         
+        // Add damageSupplemental and additionalDamage
         damage += damageSupplemental + additionalDamage;
         damageWithoutAdditional += damageSupplemental;
         damageWithoutCritical += damageSupplemental + additionalDamage;
@@ -1045,6 +1048,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
             // Only consecutive shots
             damageWithMultiple: damageWithoutCritical * expectedAttack,
             additionalDamage: additionalDamage,
+            additionalRatioNumber: additionalRatioNumber,
             damageWithoutAdditional: damageWithoutAdditional,
             ougiRatio: totals[key]["ougiRatio"],
             ougiDamage: ougiDamage,
@@ -3231,14 +3235,16 @@ module.exports.generateHaisuiData = function (res, arml, summon, prof, chara, st
                     var summedAttack = onedata[key].displayAttack;
                     var newTotalAttack = summedAttack * newTotalSkillCoeff;
                     var newTotalExpected = newTotalAttack * onedata[key].criticalRatio * onedata[key].expectedAttack;
+                    
+                    let additionalDamageSupplemental = 0, chainBurstSupplemental = 0;
+                    [newDamage, newDamageWithoutCritical, newOugiDamage, chainBurstSupplemental, additionalDamageSupplemental] = supplemental.calcOthersDamage(onedata[key].skilldata.supplementalDamageArray, [newDamage, newDamageWithoutCritical, newOugiDamage, chainBurstSupplemental], {remainHP: k/100});
 
                     var newDamage = module.exports.calcDamage(summedAttack, newTotalSkillCoeff, onedata[key].criticalRatio, prof.enemyDefense, prof.defenseDebuff, onedata[key].skilldata.enemyResistance, onedata[key].skilldata.damageUP + onedata[key].skilldata.damageUPOnlyNormalDamage, onedata[key].normalDamageLimitValues)
                     newDamage *= Math.max(0, onedata[key].skilldata.additionalRatio);
+                    onedata[key].additionalRatioNumber
                     var newOugiDamage = module.exports.calcOugiDamage(summedAttack, newTotalSkillCoeff, onedata[key].criticalRatio, prof.enemyDefense, prof.defenseDebuff, onedata[key].skilldata.enemyResistance, onedata[key].ougiRatio, onedata[key].skilldata.ougiDamageUP, onedata[key].skilldata.damageUP, onedata[key].ougiFixedDamage, onedata[key].ougiBonusPlainDamage, onedata[key].ougiDamageLimitValues)
 
-                    var chainBurstSupplemental = 0;
                     var newDamageWithoutCritical = 0; //just a placeholder. not to be used in any calculation.
-                    [newDamage, newDamageWithoutCritical, newOugiDamage, chainBurstSupplemental] = supplemental.calcOthersDamage(onedata[key].skilldata.supplementalDamageArray, [newDamage, newDamageWithoutCritical, newOugiDamage, chainBurstSupplemental], {remainHP: k/100});
 
                     var chainNumber = !isNaN(prof.chainNumber) ? parseInt(prof.chainNumber) : 1;
                     var newChainBurst = chainBurstSupplemental + module.exports.calcChainBurst(chainNumber * newOugiDamage, chainNumber, module.exports.getTypeBonus(onedata[key].element, prof.enemyElement), onedata[key].skilldata.enemyResistance, onedata[key].skilldata.chainDamageUP, onedata[key].skilldata.chainDamageLimit) / chainNumber;
