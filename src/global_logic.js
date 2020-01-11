@@ -460,6 +460,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         var totalSummon = totals[key]["totalSummon"][summonind];
 
         // hp magnification
+        // Skill Buff + Aura Buff/Debuff Category
         var hpCoeff = 1.0;
         hpCoeff += 0.01 * totals[key]["normalHP"] * totalSummon["zeus"] * (1 + totals[key]["aegisUP"]);
         hpCoeff += 0.01 * totals[key]["magnaHP"] * totalSummon["magna"] * (1 + totals[key]["aegisUP"]);
@@ -469,14 +470,14 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         hpCoeff += 0.01 * totals[key]["omegaNormalHP"];
         hpCoeff += 0.01 * totals[key]["akashaHP"];
         hpCoeff += buff["hp"];
-        hpCoeff += totalSummon["hpBonus"];
         if (key == "Djeeta") {
             hpCoeff += 0.01 * totals["Djeeta"]["job"].shugoBonus;
         }
         if (totals[key]["EXLB"]["WED"]) {
             hpCoeff += 0.10;
         }
-        hpCoeff *= 1.0 + totals[key]["HPBuff"];
+        hpCoeff += 1.0 + totals[key]["HPBuff"] + totalSummon["hpBonus"];
+        // Skill Debuff + Support Debuff Category
         hpCoeff *= 1.0 - Math.min(0.70, totals[key]["HPdebuff"]);
 
         // Base HP
