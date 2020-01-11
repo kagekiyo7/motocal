@@ -476,7 +476,7 @@ module.exports.calcBasedOneSummon = function (summonind, prof, buff, totals) {
         if (totals[key]["EXLB"]["WED"]) {
             hpCoeff += 0.10;
         }
-        hpCoeff += 1.0 + totals[key]["HPBuff"] + totalSummon["hpBonus"];
+        hpCoeff += totals[key]["HPBuff"] + totalSummon["hpBonus"];
         // Skill Debuff + Support Debuff Category
         hpCoeff *= 1.0 - Math.min(0.70, totals[key]["HPdebuff"]);
 
