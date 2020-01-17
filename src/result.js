@@ -544,7 +544,7 @@ var ResultList = CreateClass({
                 return <>
                     <tr key={label}><th colSpan={size}>{intl.translate(label, locale)}</th></tr>
                     {chunk(children, size).map((items, ind) =>
-                        <tr key={label + '-' + ind}>{items.map(({name, label}, ind) =>
+                        <tr key={label + '-' + ind}>{items.map(({name, label}) =>
                             <td key={name}
                                 onClick={this.handleEvent.bind(this, name)}
                                 className={this.state[name] ? "display-checked" : "display-unchecked"}>
