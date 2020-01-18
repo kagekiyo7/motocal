@@ -563,7 +563,7 @@ var ResultList = CreateClass({
                         <table style={{"width": "100%", textAlign: "center", marginBottom: "2px"}}
                                className="table table-bordered">
                             <tbody>
-                                {switchList.map(({label,items}) =>
+                                {switchList.map(({label, items}) =>
                                     <ResuleMenuGroup key={label} label={label}>{items}</ResuleMenuGroup>
                                 )}
                             </tbody>
@@ -682,7 +682,7 @@ var ResultList = CreateClass({
             var changeSortKey = <FormControl componentClass="select" style={{"width": "350px"}}
                                              value={this.props.sortKey}
                                              onChange={this.props.onChangeSortkey}> {selector[locale].ktypes} </FormControl>;
-            const ResultMenuItem = ({name,label}) => (
+            const ResultMenuItem = ({name, label}) => (
                 <MenuItem
                     onClick={this.handleEvent.bind(this, name)}
                     active={this.state[name]}>
@@ -693,9 +693,9 @@ var ResultList = CreateClass({
                 <div className="resultList">
                     <ControlLabel>{intl.translate("表示項目切替", locale)}</ControlLabel>
                     <ButtonToolbar>
-                        {switchList.map(({label,items}, ind) =>
+                        {switchList.map(({label, items}, ind) =>
                             <DropdownButton title={intl.translate(label, locale)} id={"dropdown-"+ind} key={ind}>
-                                {items.map(({name,label}) => <ResultMenuItem key={name} name={name} label={label} />)}
+                                {items.map(({name, label}) => <ResultMenuItem key={name} name={name} label={label} />)}
                             </DropdownButton>
                         )}
                         <ControlAutoUpdate autoupdate={this.state.disableAutoResultUpdate}
