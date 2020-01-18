@@ -305,7 +305,7 @@ var ResultList = CreateClass({
         newState[key] = !newState[key];
 
         // UPDATE after automatic update ON
-        if (key == "disableAutoResultUpdate" && newState[key]) {
+        if (key == "disableAutoResultUpdate" && !newState[key]) {
             newState["result"] = this.calculateResult(this.props);
         }
         this.setState(newState);
