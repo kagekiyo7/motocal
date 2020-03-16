@@ -51,6 +51,7 @@ function newCalcTotalDamage(totals, res, turn) {
         // Processing at start of turn.
         countOugiPerTurn = 0;
         totalOugiPerTurn = 0;
+        // 1.0 is base.
         lockoutTimePerTurn = 1.0;
         
         // Processing for each character.
@@ -64,7 +65,6 @@ function newCalcTotalDamage(totals, res, turn) {
                     totalOugiPerTurn += res[key].ougiDamage * 2;
                     countOugiPerTurn += 2;
                     getOugiGageBonus(2);
-                    lockoutTimePerTurn += 0.35 * 2;
                     // Temporary implementation
                     if (key == "Djeeta" && res[key].ougiGageUpOugiBuff) getOugiGageUpOugiBuff(2);
                 // Ougi attack (100%)
@@ -75,7 +75,6 @@ function newCalcTotalDamage(totals, res, turn) {
                     totalOugiPerTurn += res[key].ougiDamage;
                     countOugiPerTurn += 1;
                     getOugiGageBonus(1);
-                    lockoutTimePerTurn += 0.35;
                     if (key == "Djeeta" && res[key].ougiGageUpOugiBuff) getOugiGageUpOugiBuff(1);
                 // Normal attack
                 } else {
@@ -91,7 +90,15 @@ function newCalcTotalDamage(totals, res, turn) {
         // Chain burst
         if (countOugiPerTurn > 1) {
             totalDamage += res["Djeeta"].chainBurstSupplemental + calcChainBurst(totalOugiPerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, res["Djeeta"].enemyElement), res["Djeeta"].skilldata.enemyResistance, res["Djeeta"].skilldata.chainDamageUP, res["Djeeta"].skilldata.chainDamageLimit);
-            lockoutTimePerTurn += 1.0 + (2.0 * Math.min(4, countOugiPerTurn));
+        }
+        
+        switch (countOugiPerTurn) { 
+            case 1: lockoutTimePerTurn += 1.7; break;
+            case 2: lockoutTimePerTurn += 5.4; break;
+            case 3: lockoutTimePerTurn += 8.1; break;
+            case 4: lockoutTimePerTurn += 10.8; break;
+            //case 5 or more.
+            default: lockoutTimePerTurn += 11.3; break;
         }
            
         lockoutTime += Math.max(loadTime, lockoutTimePerTurn);
