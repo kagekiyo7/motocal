@@ -93,6 +93,7 @@ function newCalcTotalDamage(totals, res, turn) {
         }
         
         switch (countOugiPerTurn) { 
+            case 0: break;
             case 1: lockoutTimePerTurn += 1.7; break;
             case 2: lockoutTimePerTurn += 5.4; break;
             case 3: lockoutTimePerTurn += 8.1; break;
