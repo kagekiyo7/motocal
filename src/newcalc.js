@@ -27,7 +27,7 @@ function newCalcTotalDamage(totals, res, turn) {
         return charactors;
     }
     
-    // Give other characters gauge bonus when do ougi. 
+    // Give other characters ougi gauge bonus when do ougi. 
     // Cannot be given to characters that have already did ougi, including the did ougi character.
     const getOugiGageBonus = (times) => {
         for (const key in charactors) {
@@ -37,7 +37,7 @@ function newCalcTotalDamage(totals, res, turn) {
         }
     };
     
-    // Give all character gauge bonus when do ougi effect of Unsigned Kaneshige(無銘金重) etc. 
+    // Give all character ougi gauge bonus when do ougi effect of Unsigned Kaneshige(無銘金重) etc. 
     const getOugiGageUpOugiBuff = (times) => {
         for (const key in charactors) {
             const {ougiGageUpOugiBuff, ougiGageBuff, ougiGageLimit, ougiGage} = charactors[key];
@@ -54,13 +54,14 @@ function newCalcTotalDamage(totals, res, turn) {
         let totalLockoutTime = 0;
         let lockoutTimePerTurn = 0;
         
+        // Processing damage/lockoutTime for each turns.
         for (let i = 0; i < turn; i++) {
             // Processing at start of turn. Initialize numbers.
             countOugiPerTurn = 0;
             ougiDamagePerTurn = 0;
             lockoutTimePerTurn = 1.0; // 1.0 is base.
             
-            // Processing for each character.
+            // Processing damage/lockoutTime for each characters.
             for (let key in charactors) {
                 const {damage, ougiDamage, ougiGageUpOugiBuff, expectedAttack, ougiGageLimit, expectedOugiGageByAttack} = charactors[key];
             // Ougi Attack (200%)
@@ -81,7 +82,7 @@ function newCalcTotalDamage(totals, res, turn) {
                     countOugiPerTurn += 1;
                     getOugiGageBonus(1);
                     if (key == "Djeeta" && ougiGageUpOugiBuff) getOugiGageUpOugiBuff(1);
-            // Normal attack
+            // Normal Attack
                 } else {
                     charactors[key].attackMode = "normal";
                     totalDamage += damage;
@@ -91,7 +92,7 @@ function newCalcTotalDamage(totals, res, turn) {
             }
         
             // Processing at end of turn.
-            // Chain burst damage.
+            // Chain Burst Damage.
             if (countOugiPerTurn > 1) {
                 totalDamage += charactors["Djeeta"].chainBurstSupplemental + calcChainBurst(ougiDamagePerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, charactors["Djeeta"].enemyElement), charactors["Djeeta"].skilldata.enemycharactorsistance, charactors["Djeeta"].skilldata.chainDamageUP, charactors["Djeeta"].skilldata.chainDamageLimit);
             }
@@ -109,6 +110,7 @@ function newCalcTotalDamage(totals, res, turn) {
             
             //totalLockoutTime += Math.max(loadTime, lockoutTimePerTurn);
             for (const key in charactors) {
+                // Reset attackMode;
                 charactors[key].attackMode = "";
                 // Give uplift(高揚) effect.
                 if (charactors[key].uplift) {
