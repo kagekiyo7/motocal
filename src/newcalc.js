@@ -124,7 +124,7 @@ function newCalcTotalDamage(totals, res, turn) {
             
             for (const key in charactors) {
                 for (const item in charactors[key]) {
-                    if (Number.isNaN(charactors[key][item])) console.log(item + ": "+ charactors[key][item]);
+                    if (!Number.isFinite(charactors[key][item])) console.log(item + ": "+ charactors[key][item]);
                 }
             }
             
