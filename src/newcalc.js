@@ -29,22 +29,22 @@ function newCalcTotalDamage(totals, res, turn) {
     
     // Give other characters ougi gauge bonus when do ougi. 
     // Cannot be given to characters that have already did ougi, including the did ougi character.
-    const getOugiGageBonus = (times) => {
+    function giveOugiGageBonus (times) {
         for (const key in charactors) {
             const {ougiGageBuff, attackMode, ougiGage, ougiGageLimit} = charactors[key];
             const ougiGageUp = Math.ceil(10 * ougiGageBuff);
             if (attackMode != "ougi") charactors[key].ougiGage = Math.min(ougiGageLimit, Math.max(0, ougiGage + (ougiGageUp * times)));
         }
-    };
+    }
     
     // Give all character ougi gauge bonus when do ougi effect of Unsigned Kaneshige(無銘金重) etc. 
-    const getOugiGageUpOugiBuff = (times) => {
+    function giveOugiGageUpOugiBuff (times) {
         for (const key in charactors) {
             const {ougiGageUpOugiBuff, ougiGageBuff, ougiGageLimit, ougiGage} = charactors[key];
             const ougiGageUp = Math.ceil(ougiGageUpOugiBuff * ougiGageBuff);
             charactors[key].ougiGage = Math.min(ougiGageLimit, Math.max(0, ougiGage + (ougiGageUp * times)));
         }
-    };
+    }
     
     const calcDamagePerLockoutTime = (turn) => {
         const charactors = getCharacters();
@@ -71,8 +71,8 @@ function newCalcTotalDamage(totals, res, turn) {
                     totalDamage += ougiDamage * 2;
                     ougiDamagePerTurn += ougiDamage * 2;
                     countOugiPerTurn += 2;
-                    getOugiGageBonus(2);
-                    if (key == "Djeeta" && ougiGageUpOugiBuff) getOugiGageUpOugiBuff(2);
+                    giveOugiGageBonus(2);
+                    if (key == "Djeeta" && ougiGageUpOugiBuff) giveOugiGageUpOugiBuff(2);
             // Ougi Attack (100%)
                 } else if (charactors[key].ougiGage >= 100) {
                     charactors[key].attackMode = "ougi";
@@ -80,8 +80,8 @@ function newCalcTotalDamage(totals, res, turn) {
                     totalDamage += ougiDamage;
                     ougiDamagePerTurn += ougiDamage;
                     countOugiPerTurn += 1;
-                    getOugiGageBonus(1);
-                    if (key == "Djeeta" && ougiGageUpOugiBuff) getOugiGageUpOugiBuff(1);
+                    giveOugiGageBonus(1);
+                    if (key == "Djeeta" && ougiGageUpOugiBuff) giveOugiGageUpOugiBuff(1);
             // Normal Attack
                 } else {
                     charactors[key].attackMode = "normal";
