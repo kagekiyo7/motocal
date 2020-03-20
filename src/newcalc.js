@@ -13,7 +13,7 @@ function newCalcTotalDamage(totals, res, turn) {
         const charactors = {};
         for (const key in res) {
             if (totals[key]["isConsideredInAverage"]) {
-                charactors[key] = JSON.parse(JSON.stringify(res[key]));
+                charactors[key] = res[key];//JSON.parse(JSON.stringify(res[key]));
                 charactors[key].ougiGageLimit = (totals[key]["job"]["name"] == "剣豪" ||totals[key]["job"]["name"] == "侍" 
                     || key == "ヴァジラ" || key == "サーヴァンツ ドロシー＆クラウディア" 
                     || key == "[最終]オクトー" || key == "オクトー" || key == "サビルバラ(イベントver)" || key == "サビルバラ" 
