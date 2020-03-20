@@ -124,12 +124,12 @@ function newCalcTotalDamage(totals, res, turn) {
         }
         
         // Debug
-        console.log("--------");
-        for (const key in charactors) {
+        /*for (const key in charactors) {
             for (const item in charactors[key]) {
                 console.log(item + ": "+ charactors[key][item]);
             }
-        }
+        }*/
+        console.log(charactors);
         
         return totalDamage / totalLockoutTime;
     }
