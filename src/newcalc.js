@@ -122,6 +122,12 @@ function newCalcTotalDamage(totals, res, turn) {
                 }
             }
             
+            for (const key in charactors) {
+                for (const item in charactors[key]) {
+                    if (!charactors[key][item]) console.log(item + ": "+ charactors[key][item]);
+                }
+            }
+            
         }
         return totalDamage / totalLockoutTime;
     }
