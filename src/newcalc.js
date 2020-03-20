@@ -130,6 +130,11 @@ function newCalcTotalDamage(totals, res, turn) {
             }
         }*/
         console.log(charactors);
+        console.log("totalDamage: " + totalDamage);
+        console.log("countOugiPerTurn: " + countOugiPerTurn);
+        console.log("ougiDamagePerTurn: " + ougiDamagePerTurn);
+        console.log("totalLockoutTime: " + totalLockoutTime);
+        console.log("lockoutTimePerTurn: " + lockoutTimePerTurn);
         
         return totalDamage / totalLockoutTime;
     }
