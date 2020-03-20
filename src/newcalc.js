@@ -13,7 +13,7 @@ function newCalcTotalDamage(totals, res, turn) {
         const charactors = {};
         for (const key in res) {
             if (totals[key]["isConsideredInAverage"]) {
-                charactors[key] = res[key];
+                charactors[key] = JSON.parse(JSON.stringify(res[key]));
                 charactors[key].ougiGageLimit = (totals[key]["job"]["name"] == "剣豪" ||totals[key]["job"]["name"] == "侍" 
                     || key == "ヴァジラ" || key == "サーヴァンツ ドロシー＆クラウディア" 
                     || key == "[最終]オクトー" || key == "オクトー" || key == "サビルバラ(イベントver)" || key == "サビルバラ" 
@@ -55,14 +55,14 @@ function newCalcTotalDamage(totals, res, turn) {
         let totalLockoutTime = 0;
         let lockoutTimePerTurn = 0;
         
-        // Processing damage/lockoutTime for each turns.
+        // Processing for each turns.
         for (let i = 0; i < turn; i++) {
             // Processing at start of turn. Initialize numbers.
             countOugiPerTurn = 0;
             ougiDamagePerTurn = 0;
             lockoutTimePerTurn = 1.0; // 1.0 is base.
             
-            // Processing damage/lockoutTime for each characters.
+            // Processing attack for each characters.
             for (let key in charactors) {
                 const {damage, ougiDamage, ougiGageUpOugiBuff, expectedAttack, ougiGageLimit, expectedOugiGageByAttack} = charactors[key];
             // Ougi Attack (200%)
@@ -109,16 +109,19 @@ function newCalcTotalDamage(totals, res, turn) {
                 default: lockoutTimePerTurn += 11.3; break;
             }
             
-            //totalLockoutTime += Math.max(loadTime, lockoutTimePerTurn);
+            totalLockoutTime += lockoutTimePerTurn;
+            
             for (const key in charactors) {
                 // Reset attackMode;
                 charactors[key].attackMode = "";
+                
                 // Give uplift(高揚) effect.
                 if (charactors[key].uplift) {
                     let uplift = Math.ceil(charactors[key].uplift * charactors[key].ougiGageBuff);
                     charactors[key].ougiGage = Math.min(charactors[key].ougiGageLimit, Math.max(0, charactors[key].ougiGage + uplift));
                 }
             }
+            
         }
         return totalDamage / totalLockoutTime;
     }
