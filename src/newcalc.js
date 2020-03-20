@@ -121,14 +121,14 @@ function newCalcTotalDamage(totals, res, turn) {
                     charactors[key].ougiGage = Math.min(charactors[key].ougiGageLimit, Math.max(0, charactors[key].ougiGage + uplift));
                 }
             }
-            
-            for (const key in charactors) {
-                for (const item in charactors[key]) {
-                    if (!Number.isFinite(charactors[key][item])) console.log(item + ": "+ charactors[key][item]);
-                }
-            }
-            
         }
+        
+        for (const key in charactors) {
+            for (const item in charactors[key]) {
+                console.log(item + ": "+ charactors[key][item]);
+            }
+        }
+        
         return totalDamage / totalLockoutTime;
     }
     return calcDamagePerLockoutTime(turn);
