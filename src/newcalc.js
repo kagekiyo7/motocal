@@ -95,7 +95,7 @@ function newCalcTotalDamage(totals, res, turn) {
             // Processing at end of turn.
             // Chain Burst Damage.
             if (countOugiPerTurn > 1) {
-                totalDamage += charactors["Djeeta"].chainBurstSupplemental + calcChainBurst(ougiDamagePerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, charactors["Djeeta"].enemyElement), charactors["Djeeta"].skilldata.enemycharactorsistance, charactors["Djeeta"].skilldata.chainDamageUP, charactors["Djeeta"].skilldata.chainDamageLimit);
+                //totalDamage += charactors["Djeeta"].chainBurstSupplemental + calcChainBurst(ougiDamagePerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, charactors["Djeeta"].enemyElement), charactors["Djeeta"].skilldata.enemycharactorsistance, charactors["Djeeta"].skilldata.chainDamageUP, charactors["Djeeta"].skilldata.chainDamageLimit);
             }
             
             // Add ougi lockoutTime.
