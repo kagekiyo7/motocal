@@ -24,6 +24,7 @@ function newCalcTotalDamage(totals, res, turn) {
                 charactors[key].expectedOugiGageByAttack = calcExpectedOugiGageByAttack(res[key].totalDA, res[key].totalTA, res[key].ougiGageBuff);
             }
         }
+        console.log(charactors);
         return charactors;
     }
     
