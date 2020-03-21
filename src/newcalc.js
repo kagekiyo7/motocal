@@ -95,12 +95,7 @@ function newCalcTotalDamage(totals, res, turn) {
             // Processing at end of turn.
             // Chain Burst Damage.
             if (countOugiPerTurn > 1) {
-                console.log("getTypeBonus: " + getTypeBonus(totals["Djeeta"].element, charactors["Djeeta"].enemyElement));
-                console.log("charactors[Djeeta].skilldata.enemycharactorsistance: " + charactors["Djeeta"].skilldata.enemycharactorsistance);
-                console.log("charactors[Djeeta].skilldata.chainDamageUP: " + charactors["Djeeta"].skilldata.chainDamageUP);
-                console.log("charactors[Djeeta].skilldata.chainDamageLimit: " + charactors["Djeeta"].skilldata.chainDamageLimit);
-                console.log("charactors[Djeeta].chainBurstSupplemental: " + charactors["Djeeta"].chainBurstSupplemental);
-                totalDamage += charactors["Djeeta"].chainBurstSupplemental + calcChainBurst(ougiDamagePerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, charactors["Djeeta"].enemyElement), charactors["Djeeta"].skilldata.enemycharactorsistance, charactors["Djeeta"].skilldata.chainDamageUP, charactors["Djeeta"].skilldata.chainDamageLimit);
+                totalDamage += charactors["Djeeta"].chainBurstSupplemental + calcChainBurst(ougiDamagePerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, charactors["Djeeta"].enemyElement), charactors["Djeeta"].skilldata.enemyResistance, charactors["Djeeta"].skilldata.chainDamageUP, charactors["Djeeta"].skilldata.chainDamageLimit);
             }
             
             // Add ougi lockoutTime.
@@ -128,18 +123,13 @@ function newCalcTotalDamage(totals, res, turn) {
             }
         }
         
-        // Debug
-        /*for (const key in charactors) {
-            for (const item in charactors[key]) {
-                console.log(item + ": "+ charactors[key][item]);
-            }
-        }*/
+        /* //Debug
         console.log(charactors);
         console.log("totalDamage: " + totalDamage);
         console.log("countOugiPerTurn: " + countOugiPerTurn);
         console.log("ougiDamagePerTurn: " + ougiDamagePerTurn);
         console.log("totalLockoutTime: " + totalLockoutTime);
-        console.log("lockoutTimePerTurn: " + lockoutTimePerTurn);
+        console.log("lockoutTimePerTurn: " + lockoutTimePerTurn);*/
         
         return totalDamage / totalLockoutTime;
     }
