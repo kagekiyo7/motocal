@@ -1340,9 +1340,9 @@ var multiLangData = {
         "zh": "期望DPT/人",
     },
     "100Tシミュ時の合計ダメージ÷100": {
-        "en": "Total DMG in Simulate 100T ÷ 100",
-        "ja": "100Tシミュ時の合計ダメージ÷100",
-        "zh": "Total DMG in Simulate 100T ÷ 100",
+        "en": "lockoutTime base calc",
+        "ja": "lockoutTime base calc",
+        "zh": "lockoutTime base calc",
     },
     "技巧倍率": {
         "en": "Critical Ratio",
