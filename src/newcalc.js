@@ -13,7 +13,7 @@ function newCalcTotalDamage(totals, res, turn) {
         const charactors = {};
         for (const key in res) {
             if (totals[key]["isConsideredInAverage"]) {
-                charactors[key] = res[key];
+                charactors[key] = JSON.parse(JSON.stringify(res[key]));
                 charactors[key].ougiGageLimit = (totals[key]["job"]["name"] == "剣豪" ||totals[key]["job"]["name"] == "侍" 
                     || key == "ヴァジラ" || key == "サーヴァンツ ドロシー＆クラウディア" 
                     || key == "[最終]オクトー" || key == "オクトー" || key == "サビルバラ(イベントver)" || key == "サビルバラ" 
@@ -24,27 +24,28 @@ function newCalcTotalDamage(totals, res, turn) {
                 charactors[key].expectedOugiGageByAttack = calcExpectedOugiGageByAttack(res[key].totalDA, res[key].totalTA, res[key].ougiGageBuff);
             }
         }
+        console.log(charactors);
         return charactors;
     }
     
     // Give other characters ougi gauge bonus when do ougi. 
-    // Cannot be given to characters that have already did ougi, including the did ougi character.
-    const getOugiGageBonus = (times) => {
+    // Cannot be given to characters that have already done ougi, including the current character.
+    const giveOugiGageBonus = (charactors, times) => {
         for (const key in charactors) {
             const {ougiGageBuff, attackMode, ougiGage, ougiGageLimit} = charactors[key];
             const ougiGageUp = Math.ceil(10 * ougiGageBuff);
             if (attackMode != "ougi") charactors[key].ougiGage = Math.min(ougiGageLimit, Math.max(0, ougiGage + (ougiGageUp * times)));
         }
-    };
+    }
     
     // Give all character ougi gauge bonus when do ougi effect of Unsigned Kaneshige(無銘金重) etc. 
-    const getOugiGageUpOugiBuff = (times) => {
+    const giveOugiGageUpOugiBuff = (charactors, times) => {
         for (const key in charactors) {
             const {ougiGageUpOugiBuff, ougiGageBuff, ougiGageLimit, ougiGage} = charactors[key];
             const ougiGageUp = Math.ceil(ougiGageUpOugiBuff * ougiGageBuff);
             charactors[key].ougiGage = Math.min(ougiGageLimit, Math.max(0, ougiGage + (ougiGageUp * times)));
         }
-    };
+    }
     
     const calcDamagePerLockoutTime = (turn) => {
         const charactors = getCharacters();
@@ -54,14 +55,14 @@ function newCalcTotalDamage(totals, res, turn) {
         let totalLockoutTime = 0;
         let lockoutTimePerTurn = 0;
         
-        // Processing damage/lockoutTime for each turns.
+        // Processing for each turns.
         for (let i = 0; i < turn; i++) {
             // Processing at start of turn. Initialize numbers.
             countOugiPerTurn = 0;
             ougiDamagePerTurn = 0;
             lockoutTimePerTurn = 1.0; // 1.0 is base.
             
-            // Processing damage/lockoutTime for each characters.
+            // Processing attack for each characters.
             for (let key in charactors) {
                 const {damage, ougiDamage, ougiGageUpOugiBuff, expectedAttack, ougiGageLimit, expectedOugiGageByAttack} = charactors[key];
             // Ougi Attack (200%)
@@ -71,8 +72,8 @@ function newCalcTotalDamage(totals, res, turn) {
                     totalDamage += ougiDamage * 2;
                     ougiDamagePerTurn += ougiDamage * 2;
                     countOugiPerTurn += 2;
-                    getOugiGageBonus(2);
-                    if (key == "Djeeta" && ougiGageUpOugiBuff) getOugiGageUpOugiBuff(2);
+                    giveOugiGageBonus(charactors, 2);
+                    if (key == "Djeeta" && ougiGageUpOugiBuff) giveOugiGageUpOugiBuff(charactors, 2);
             // Ougi Attack (100%)
                 } else if (charactors[key].ougiGage >= 100) {
                     charactors[key].attackMode = "ougi";
@@ -80,8 +81,8 @@ function newCalcTotalDamage(totals, res, turn) {
                     totalDamage += ougiDamage;
                     ougiDamagePerTurn += ougiDamage;
                     countOugiPerTurn += 1;
-                    getOugiGageBonus(1);
-                    if (key == "Djeeta" && ougiGageUpOugiBuff) getOugiGageUpOugiBuff(1);
+                    giveOugiGageBonus(charactors, 1);
+                    if (key == "Djeeta" && ougiGageUpOugiBuff) giveOugiGageUpOugiBuff(charactors, 1);
             // Normal Attack
                 } else {
                     charactors[key].attackMode = "normal";
@@ -94,7 +95,7 @@ function newCalcTotalDamage(totals, res, turn) {
             // Processing at end of turn.
             // Chain Burst Damage.
             if (countOugiPerTurn > 1) {
-                totalDamage += charactors["Djeeta"].chainBurstSupplemental + calcChainBurst(ougiDamagePerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, charactors["Djeeta"].enemyElement), charactors["Djeeta"].skilldata.enemycharactorsistance, charactors["Djeeta"].skilldata.chainDamageUP, charactors["Djeeta"].skilldata.chainDamageLimit);
+                totalDamage += charactors["Djeeta"].chainBurstSupplemental + calcChainBurst(ougiDamagePerTurn, countOugiPerTurn, getTypeBonus(totals["Djeeta"].element, charactors["Djeeta"].enemyElement), charactors["Djeeta"].skilldata.enemyResistance, charactors["Djeeta"].skilldata.chainDamageUP, charactors["Djeeta"].skilldata.chainDamageLimit);
             }
             
             // Add ougi lockoutTime.
@@ -108,10 +109,12 @@ function newCalcTotalDamage(totals, res, turn) {
                 default: lockoutTimePerTurn += 11.3; break;
             }
             
-            //totalLockoutTime += Math.max(loadTime, lockoutTimePerTurn);
+            totalLockoutTime += lockoutTimePerTurn;
+            
             for (const key in charactors) {
                 // Reset attackMode;
                 charactors[key].attackMode = "";
+                
                 // Give uplift(高揚) effect.
                 if (charactors[key].uplift) {
                     let uplift = Math.ceil(charactors[key].uplift * charactors[key].ougiGageBuff);
@@ -119,6 +122,15 @@ function newCalcTotalDamage(totals, res, turn) {
                 }
             }
         }
+        
+        /* //Debug
+        console.log(charactors);
+        console.log("totalDamage: " + totalDamage);
+        console.log("countOugiPerTurn: " + countOugiPerTurn);
+        console.log("ougiDamagePerTurn: " + ougiDamagePerTurn);
+        console.log("totalLockoutTime: " + totalLockoutTime);
+        console.log("lockoutTimePerTurn: " + lockoutTimePerTurn);*/
+        
         return totalDamage / totalLockoutTime;
     }
     return calcDamagePerLockoutTime(turn);
