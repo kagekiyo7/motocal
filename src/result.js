@@ -393,7 +393,7 @@ var ResultList = CreateClass({
 
         var tableheader = [];
         if (switcher.switchTotalAttack) {
-            tableheader.push(intl.translate("攻撃力(二手技巧無し)", locale))
+            tableheader.push(intl.translate("基礎ダメージ", locale))
         }
         if (switcher.switchATKandHP) {
             tableheader.push(intl.translate("戦力", locale))
@@ -578,7 +578,7 @@ var ResultList = CreateClass({
                                     className={(this.state.switchTotalOugiDamageWithChain == 1) ? "display-checked" : "display-unchecked"}> 奥義+チェンバダメージ
                                 </td>
                                 <td onClick={this.handleEvent.bind(this, "switchCharaAttack")}
-                                    className={(this.state.switchCharaAttack == 1) ? "display-checked" : "display-unchecked"}> キャラ攻撃力
+                                    className={(this.state.switchCharaAttack == 1) ? "display-checked" : "display-unchecked"}> キャラ基礎ダメージ
                                 </td>
                             </tr>
                             <tr>
@@ -791,7 +791,7 @@ var ResultList = CreateClass({
 
                         <DropdownButton title={intl.translate("キャラ情報・スキル合計値", locale)} id="chara-and-skill-info">
                             <MenuItem onClick={this.handleEvent.bind(this, "switchCharaAttack")}
-                                      active={(this.state.switchCharaAttack == 1) ? true : false}>{intl.translate("キャラ(result)", locale)}{intl.translate("攻撃力", locale)}</MenuItem>
+                                      active={(this.state.switchCharaAttack == 1) ? true : false}>{intl.translate("キャラ(result)", locale)}{intl.translate("基礎ダメージ", locale)}</MenuItem>
                             <MenuItem onClick={this.handleEvent.bind(this, "switchCharaHP")}
                                       active={(this.state.switchCharaHP == 1) ? true : false}>{intl.translate("キャラ(result)", locale)}HP</MenuItem>
                             <MenuItem onClick={this.handleEvent.bind(this, "switchCharaDA")}
@@ -1019,7 +1019,7 @@ var Result = CreateClass({
                         charaDetail[key].push(
                             <span key={key + "-attack"} className="result-chara-detail">
                                     <span
-                                        className="label label-primary">{intl.translate("攻撃力", locale)}</span> {formatCommaSeparatedNumber(m.data[key].totalAttack)}&nbsp;
+                                        className="label label-primary">{intl.translate("基礎ダメージ", locale)}</span> {formatCommaSeparatedNumber(m.data[key].totalAttack)}&nbsp;
                                 </span>
                         );
                     }
