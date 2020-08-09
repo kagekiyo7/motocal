@@ -402,7 +402,7 @@ var ResultList = CreateClass({
             tableheader.push(intl.translate("期待攻撃回数", locale))
         }
         if (switcher.switchCriticalAttack) {
-            tableheader.push(intl.translate("技巧期待攻撃力", locale))
+            tableheader.push(intl.translate("技巧期待基礎ダメージ", locale))
         }
         if (switcher.switchCriticalRatio) {
             tableheader.push(intl.translate("技巧期待値", locale))
@@ -411,10 +411,10 @@ var ResultList = CreateClass({
             tableheader.push("HP\n(" + intl.translate("残HP", locale) + ")")
         }
         if (switcher.switchAverageAttack) {
-            tableheader.push(intl.translate("パーティ平均攻撃力", locale))
+            tableheader.push(intl.translate("パーティ平均基礎ダメージ", locale))
         }
         if (switcher.switchAverageCriticalAttack) {
-            tableheader.push(intl.translate("技巧平均攻撃力", locale))
+            tableheader.push(intl.translate("技巧平均基礎ダメージ", locale))
         }
         if (switcher.switchTotalExpected) {
             tableheader.push(intl.translate("総合*回数*技巧", locale))
@@ -514,7 +514,7 @@ var ResultList = CreateClass({
                             <tbody>
                             <tr>
                                 <td onClick={this.handleEvent.bind(this, "switchTotalAttack")}
-                                    className={(this.state.switchTotalAttack == 1) ? "display-checked" : "display-unchecked"}> 攻撃力(二手技巧無し)
+                                    className={(this.state.switchTotalAttack == 1) ? "display-checked" : "display-unchecked"}> 基礎ダメージ
                                 </td>
                                 <td onClick={this.handleEvent.bind(this, "switchATKandHP")}
                                     className={(this.state.switchATKandHP == 1) ? "display-checked" : "display-unchecked"}>戦力
@@ -536,13 +536,13 @@ var ResultList = CreateClass({
                             </tr>
                             <tr>
                                 <td onClick={this.handleEvent.bind(this, "switchCriticalAttack")}
-                                    className={(this.state.switchCriticalAttack == 1) ? "display-checked" : "display-unchecked"}> 技巧期待値*攻撃力
+                                    className={(this.state.switchCriticalAttack == 1) ? "display-checked" : "display-unchecked"}> 技巧期待値*基礎ダメージ
                                 </td>
                                 <td onClick={this.handleEvent.bind(this, "switchAverageAttack")}
-                                    className={(this.state.switchAverageAttack == 1) ? "display-checked" : "display-unchecked"}> パーティ平均攻撃力(二手技巧無し)
+                                    className={(this.state.switchAverageAttack == 1) ? "display-checked" : "display-unchecked"}> パーティ平均基礎ダメージ
                                 </td>
                                 <td onClick={this.handleEvent.bind(this, "switchAverageCriticalAttack")}
-                                    className={(this.state.switchAverageCriticalAttack == 1) ? "display-checked" : "display-unchecked"}> 技巧平均攻撃力
+                                    className={(this.state.switchAverageCriticalAttack == 1) ? "display-checked" : "display-unchecked"}> 技巧平均基礎ダメージ
                                 </td>
                             </tr>
                             <tr>
@@ -740,7 +740,7 @@ var ResultList = CreateClass({
                     <ButtonToolbar>
                         <DropdownButton title={intl.translate("攻撃力・HP・連撃率", locale)} id="atk-hp-etcs">
                             <MenuItem onClick={this.handleEvent.bind(this, "switchTotalAttack")}
-                                      active={(this.state.switchTotalAttack == 1) ? true : false}>{intl.translate("攻撃力(二手技巧無し)", locale)}</MenuItem>
+                                      active={(this.state.switchTotalAttack == 1) ? true : false}>{intl.translate("基礎ダメージ", locale)}</MenuItem>
                             <MenuItem onClick={this.handleEvent.bind(this, "switchATKandHP")}
                                       active={(this.state.switchATKandHP == 1) ? true : false}>{intl.translate("戦力", locale)}</MenuItem>
                             <MenuItem onClick={this.handleEvent.bind(this, "switchHP")}
