@@ -752,7 +752,7 @@ var ResultList = CreateClass({
                             <MenuItem onClick={this.handleEvent.bind(this, "switchCriticalRatio")}
                                       active={(this.state.switchCriticalRatio == 1) ? true : false}>{intl.translate("技巧期待値", locale)}</MenuItem>
                             <MenuItem onClick={this.handleEvent.bind(this, "switchCriticalAttack")}
-                                      active={(this.state.switchCriticalAttack == 1) ? true : false}>{intl.translate("技巧期待攻撃力", locale)}</MenuItem>
+                                      active={(this.state.switchCriticalAttack == 1) ? true : false}>{intl.translate("技巧期待基礎ダメージ", locale)}</MenuItem>
                             <MenuItem onClick={this.handleEvent.bind(this, "switchTotalExpected")}
                                       active={(this.state.switchTotalExpected == 1) ? true : false}>{intl.translate("総合*回数*技巧", locale)}</MenuItem>
                         </DropdownButton>
@@ -761,7 +761,7 @@ var ResultList = CreateClass({
                             <MenuItem onClick={this.handleEvent.bind(this, "switchAverageAttack")}
                                       active={(this.state.switchAverageAttack == 1) ? true : false}>{intl.translate("パーティ平均基礎ダメージ", locale)}</MenuItem>
                             <MenuItem onClick={this.handleEvent.bind(this, "switchAverageCriticalAttack")}
-                                      active={(this.state.switchAverageCriticalAttack == 1) ? true : false}>{intl.translate("技巧平均攻撃力", locale)}</MenuItem>
+                                      active={(this.state.switchAverageCriticalAttack == 1) ? true : false}>{intl.translate("技巧平均基礎ダメージ", locale)}</MenuItem>
                             <MenuItem onClick={this.handleEvent.bind(this, "switchAverageTotalExpected")}
                                       active={(this.state.switchAverageTotalExpected == 1) ? true : false}>{intl.translate("総回技の平均", locale)}</MenuItem>
                         </DropdownButton>
