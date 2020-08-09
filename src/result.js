@@ -757,9 +757,9 @@ var ResultList = CreateClass({
                                       active={(this.state.switchTotalExpected == 1) ? true : false}>{intl.translate("総合*回数*技巧", locale)}</MenuItem>
                         </DropdownButton>
 
-                        <DropdownButton title={intl.translate("パーティ平均攻撃力", locale)} id="party-averafed-atk">
+                        <DropdownButton title={intl.translate("パーティ平均基礎ダメージ", locale)} id="party-averafed-atk">
                             <MenuItem onClick={this.handleEvent.bind(this, "switchAverageAttack")}
-                                      active={(this.state.switchAverageAttack == 1) ? true : false}>{intl.translate("パーティ平均攻撃力", locale)}</MenuItem>
+                                      active={(this.state.switchAverageAttack == 1) ? true : false}>{intl.translate("パーティ平均基礎ダメージ", locale)}</MenuItem>
                             <MenuItem onClick={this.handleEvent.bind(this, "switchAverageCriticalAttack")}
                                       active={(this.state.switchAverageCriticalAttack == 1) ? true : false}>{intl.translate("技巧平均攻撃力", locale)}</MenuItem>
                             <MenuItem onClick={this.handleEvent.bind(this, "switchAverageTotalExpected")}
