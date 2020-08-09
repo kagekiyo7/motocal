@@ -1338,10 +1338,10 @@ var multiLangData = {
         "ja": "期待攻撃回数\n(期待攻撃力)",
         "zh": "攻击次数期望",
     },
-    "技巧期待攻撃力": {
-        "en": "ATK with Critical",
-        "ja": "技巧期待攻撃力",
-        "zh": "考虑技巧的攻击力期望",
+    "技巧期待基礎ダメージ": {
+        "en": "Base DMG with Critical",
+        "ja": "技巧期待基礎ダメージ",
+        "zh": "考虑技巧基礎Damage",
     },
     "技巧期待値": {
         "en": "Exp. Critical Ratio",
@@ -1358,15 +1358,15 @@ var multiLangData = {
         "ja": "キャラ",
         "zh": "角色",
     },
-    "パーティ平均攻撃力": {
-        "en": "Party-Averaged Pure ATK",
-        "ja": "パーティ平均攻撃力(二手技巧無し)",
-        "zh": "全队平均攻击力(不考虑连击技巧)",
+    "パーティ平均基礎ダメージ": {
+        "en": "Party-Averaged Base DMG",
+        "ja": "パーティ平均基礎ダメージ(二手技巧無し)",
+        "zh": "全队平均基礎damage(不考虑连击技巧)",
     },
-    "技巧平均攻撃力": {
-        "en": "Party-Averaged ATK with Critical",
-        "ja": "技巧平均攻撃力",
-        "zh": "全队平均攻击力(考虑连击技巧)",
+    "技巧平均基礎ダメージ": {
+        "en": "Party-Averaged Base DMG with Critical",
+        "ja": "技巧平均基礎ダメージ",
+        "zh": "全队平均基礎damage(考虑连击技巧)",
     },
     "総合*回数*技巧": {
         "en": "PureATK*Crit.*Freq.",
