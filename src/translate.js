@@ -1360,8 +1360,8 @@ var multiLangData = {
     },
     "パーティ平均基礎ダメージ": {
         "en": "Party-Averaged Base DMG",
-        "ja": "パーティ平均基礎ダメージ(二手技巧無し)",
-        "zh": "全队平均基礎damage(不考虑连击技巧)",
+        "ja": "パーティ平均基礎ダメージ",
+        "zh": "全队平均基礎damage",
     },
     "技巧平均基礎ダメージ": {
         "en": "Party-Averaged Base DMG with Critical",
